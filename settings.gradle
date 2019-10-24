@@ -1,0 +1,1 @@
+include ':app', 'moduleBusiness:usermodule', 'moduleCore:modulebase', 'moduleCore:mvvmbase', 'modulePublic:easyPopup'

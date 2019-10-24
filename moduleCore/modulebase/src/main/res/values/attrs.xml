@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HeadView">
+        <attr name="title" format="string" />
+        <attr name="titleColor" format="color" />
+        <attr name="blackBack" format="boolean" />
+        <attr name="showLine" format="boolean" />
+        <attr name="rightBtnStr" format="string" />
+        <attr name="showRightBtn" format="boolean" />
+        <attr name="rightBtnColor" format="color"/>
+        <attr name="backColor" format="reference|color" />
+    </declare-styleable>
+</resources>

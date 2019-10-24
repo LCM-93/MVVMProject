@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+
+    <color name="text_b3">#B3B3B3</color>
+    <color name="text_8e">#8E8E93</color>
+    <color name="text_aa">#AAA9A9</color>
+    <color name="text_f0">#F02C23</color>
+    <color name="text_33">#333333</color>
+    <color name="text_99">#999999</color>
+    <color name="text_66">#666666</color>
+    <color name="text_c7">#C7C7C7</color>
+    <color name="text_e8">#E8541E</color>
+    <color name="text_22">#222222</color>
+    <color name="text_ef">#EF2A21</color>
+    <color name="text_ee">#EE550C</color>
+    <color name="text_f6">#F64100</color>
+    <color name="text_d4">#D4D4D4</color>
+    <color name="text_ff">#FF3B30</color>
+    <color name="text_ff8e">#FF8E00</color>
+    <color name="text_ff95">#FF9500</color>
+
+    <color name="line_ee">#EEEEEE</color>
+    <color name="line_cc">#CCCCCC</color>
+    <color name="line_dd">#DDDDDD</color>
+
+    <color name="bg_f5">#F5F5F5</color>
+    <color name="bg_f7">#F7F7F7</color>
+    <color name="bg_db">#DBDBDB</color>
+</resources>
