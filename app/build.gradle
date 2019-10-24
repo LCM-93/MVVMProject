@@ -55,11 +55,11 @@ android {
     }
 
 }
-
+def debugUserModule = rootProject.ext.project["debugUserModule"]
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":moduleCore:modulebase")
-    if (!rootProject.ext.project["debugUserModule"]) {
+    if (!debugUserModule) {
         implementation project(":moduleBusiness:usermodule")
     }
     kapt rootProject.ext.dependencies['arouter-compiler']
