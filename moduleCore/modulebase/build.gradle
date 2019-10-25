@@ -68,5 +68,6 @@ dependencies {
     releaseApi rootProject.ext.dependencies['canary-release']
 
     api project(":modulePublic:easyPopup")
+    api project(":modulePublic:x5webview")
 
 }

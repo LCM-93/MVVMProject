@@ -1,11 +1,10 @@
-package com.lcm.modulebase.plugins.view;
+package com.x5webview.lib.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;

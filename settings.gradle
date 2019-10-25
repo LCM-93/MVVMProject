@@ -1,1 +1,6 @@
-include ':app', 'moduleBusiness:usermodule', 'moduleCore:modulebase', 'moduleCore:mvvmbase', 'modulePublic:easyPopup'
+include ':app',
+        'moduleBusiness:usermodule',
+        'moduleCore:modulebase',
+        'moduleCore:mvvmbase',
+        'modulePublic:easyPopup',
+        'modulePublic:x5webview'
