@@ -4,9 +4,9 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.usermodule.R
 import com.example.usermodule.databinding.ActivityLoginBinding
+import com.lcm.modulebase.base.AppBaseActivity
 import com.lcm.modulebase.config.ARouterPath
 import com.lcm.modulebase.plugins.view.PopupManager
-import com.lcm.mvvm.base.BaseActivity
 
 /**
  * ****************************************************************
@@ -16,12 +16,15 @@ import com.lcm.mvvm.base.BaseActivity
  * *****************************************************************
  */
 @Route(path = ARouterPath.User.LOGIN)
-class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
-    override fun initView(): Int = R.layout.activity_login
+class LoginActivity : AppBaseActivity<ActivityLoginBinding, LoginViewModel>() {
+
+    override fun layoutId(): Int = R.layout.activity_login
+
+    override fun initView() {
+        viewDataBinding.viewModel = viewModel
+    }
 
     override fun initData(savedInstanceState: Bundle?) {
-        viewDataBinding.viewModel = viewModel
-
 
     }
 

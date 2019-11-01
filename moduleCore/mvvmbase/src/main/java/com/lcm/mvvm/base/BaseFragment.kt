@@ -52,7 +52,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = DataBindingUtil.inflate(inflater, initView(), container, false)
+        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         viewDataBinding.lifecycleOwner = this
         return viewDataBinding.root
     }
@@ -62,14 +62,17 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         setStatusBar()
         setStatusBarMode()
         initView()
-        initData(savedInstanceState)
+        initLoadingView()
         setListener()
         baseObserve()
         observe()
+        initData(savedInstanceState)
     }
 
 
-    abstract fun initView(): Int
+    abstract fun layoutId(): Int
+    abstract fun initView()
+    open fun initLoadingView(){}
     abstract fun initData(savedInstanceState: Bundle?)
     open fun setListener() {}
     open fun observe() {}

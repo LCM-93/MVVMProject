@@ -2,7 +2,7 @@ ext {
     project = [
             debugHttpBase  : '"https://www.wanandroid.com/"',
             releaseHttpBase: '"https://www.wanandroid.com/"',
-            debugUserModule: false,  //调试user模块
+            debugUserModule: true,  //调试user模块
     ]
 
     android = [

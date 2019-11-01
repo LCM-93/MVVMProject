@@ -35,16 +35,18 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         RxBus.get().register(this)
-        viewDataBinding = DataBindingUtil.setContentView(this, initView())
+        viewDataBinding = DataBindingUtil.setContentView(this, layoutId())
         viewModel = viewModel()
         viewDataBinding.lifecycleOwner = this
         viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
         setStatusBar()
         setStatusBarMode()
-        initData(savedInstanceState)
+        initView()
+        initLoadingView()
         setListener()
         baseObserve()
         observe()
+        initData(savedInstanceState)
     }
 
     private fun baseObserve() {
@@ -65,10 +67,13 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
 
-    abstract fun initView(): Int
-    abstract fun initData(savedInstanceState: Bundle?)
+    abstract fun layoutId(): Int
+    abstract fun initView()
+    open fun initLoadingView(){}
     open fun setListener() {}
     open fun observe() {}
+    abstract fun initData(savedInstanceState: Bundle?)
+
 
     /**
      * 处理ViewModel中的事件
