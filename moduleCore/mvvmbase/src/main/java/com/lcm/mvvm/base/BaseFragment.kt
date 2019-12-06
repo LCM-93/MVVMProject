@@ -76,6 +76,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
     abstract fun initData(savedInstanceState: Bundle?)
     open fun setListener() {}
     open fun observe() {}
+    open fun openPage(page:String,param:Any?){}
     /**
      * 处理ViewModel中的事件
      */
@@ -96,6 +97,12 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         viewModel.toastMsg.observe(this, Observer {
             it.getContentIfNotHandled()?.let { msg ->
                 showToast(msg)
+            }
+        })
+        viewModel.openPage.observe(this, Observer {
+            val pair = it.getContentIfNotHandled()
+            if(pair != null) {
+                openPage(pair.first,pair.second)
             }
         })
     }

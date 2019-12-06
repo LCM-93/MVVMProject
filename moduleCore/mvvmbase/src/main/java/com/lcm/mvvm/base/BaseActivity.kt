@@ -64,6 +64,12 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
                 showToast(msg)
             }
         })
+        viewModel.openPage.observe(this, Observer {
+            val pair = it.getContentIfNotHandled()
+            if(pair != null) {
+                openPage(pair.first,pair.second)
+            }
+        })
     }
 
 
@@ -73,6 +79,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     open fun setListener() {}
     open fun observe() {}
     abstract fun initData(savedInstanceState: Bundle?)
+    open fun openPage(page:String,param:Any?){}
 
 
     /**

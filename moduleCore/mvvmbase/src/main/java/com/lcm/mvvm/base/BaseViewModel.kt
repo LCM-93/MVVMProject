@@ -18,10 +18,16 @@ abstract class BaseViewModel : ViewModel() {
     var finishActivityEvent: MutableLiveData<VMEvent<Any?>> = MutableLiveData()
     var loadStatus: MutableLiveData<VMEvent<LoadingStatus>> = MutableLiveData()
     var toastMsg: MutableLiveData<VMEvent<String>> = MutableLiveData()
+    var openPage:MutableLiveData<VMEvent<Pair<String,Any?>>> = MutableLiveData()
 
     fun finishActivity(result: Any? = null) {
         finishActivityEvent.value = VMEvent(result)
     }
+
+    fun openPage(page:String,param:Any? = null){
+        openPage.value = VMEvent(Pair(page,param))
+    }
+
 
     fun showToast(msg: String) {
         toastMsg.value = VMEvent(msg)
