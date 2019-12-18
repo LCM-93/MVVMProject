@@ -1,10 +1,10 @@
 package com.example.usermodule.ui.login
 
 import androidx.lifecycle.MutableLiveData
-import com.lcm.modulebase.data.entity.LoginData
-import com.lcm.modulebase.data.remote.UserApi
-import com.lcm.mvvm.base.BaseViewModel
-import com.lcm.mvvm.base.event.VMEvent
+import cm.module.core.data.entity.LoginData
+import cm.module.core.data.remote.UserApi
+import cm.mvvm.core.base.BaseViewModel
+import cm.mvvm.core.base.event.VMEvent
 import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import java.lang.Exception

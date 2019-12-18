@@ -3,7 +3,7 @@ package com.example.mvvmproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
-import com.lcm.modulebase.config.ARouterPath
+import cm.module.core.config.ARouterPath
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

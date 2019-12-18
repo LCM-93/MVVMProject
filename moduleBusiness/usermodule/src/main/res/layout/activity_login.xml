@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.lcm.modulebase.plugins.view.HeadView
+        <cm.module.core.plugins.view.HeadView
             android:id="@+id/headView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

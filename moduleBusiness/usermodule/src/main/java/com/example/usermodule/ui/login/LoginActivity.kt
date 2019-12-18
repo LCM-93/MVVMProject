@@ -4,9 +4,9 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.usermodule.R
 import com.example.usermodule.databinding.ActivityLoginBinding
-import com.lcm.modulebase.base.AppBaseActivity
-import com.lcm.modulebase.config.ARouterPath
-import com.lcm.modulebase.plugins.view.PopupManager
+import cm.module.core.base.AppBaseActivity
+import cm.module.core.config.ARouterPath
+import cm.module.core.plugins.view.PopupManager
 
 /**
  * ****************************************************************
