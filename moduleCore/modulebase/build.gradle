@@ -61,13 +61,15 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api project(":moduleCore:mvvmbase")
+    api rootProject.ext.modules['mvvmbase']
+
     kapt rootProject.ext.dependencies['arouter-compiler']
     kapt rootProject.ext.dependencies['glide-compiler']
     debugApi rootProject.ext.dependencies['canary-debug']
     releaseApi rootProject.ext.dependencies['canary-release']
 
-    api project(":modulePublic:easyPopup")
-    api project(":modulePublic:x5webview")
+
+    api rootProject.ext.modules['easyPopup']
+    api rootProject.ext.modules['x5webview']
 
 }

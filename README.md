@@ -17,7 +17,8 @@
 |	|--x5webview
 |	|-- ...
 |-build.gradle
-|-config.gradle				//项目配置文件
+|-config_common.gradle				//基础配置文件
+|-config_module.gradle              //项目配置文件
 |-settings.gradle
 |-README.md
 ```

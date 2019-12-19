@@ -1,4 +1,4 @@
-def isDebug = rootProject.ext.project["debugUserModule"]
+def isDebug = rootProject.ext.debug["usermodule"]
 if (isDebug) {
     apply plugin: 'com.android.application'
 } else {
@@ -75,7 +75,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":moduleCore:modulebase")
+    implementation rootProject.ext.modules['modulebase']
+
     kapt rootProject.ext.dependencies['arouter-compiler']
     kapt rootProject.ext.dependencies['glide-compiler']
 }

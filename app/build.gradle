@@ -55,12 +55,11 @@ android {
     }
 
 }
-def debugUserModule = rootProject.ext.project["debugUserModule"]
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":moduleCore:modulebase")
-    if (!debugUserModule) {
-        implementation project(":moduleBusiness:usermodule")
+    implementation rootProject.ext.modules['modulebase']
+    if (!rootProject.ext.debug["usermodule"]) {
+        implementation rootProject.ext.modules['usermodule']
     }
     kapt rootProject.ext.dependencies['arouter-compiler']
     kapt rootProject.ext.dependencies['glide-compiler']

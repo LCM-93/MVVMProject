@@ -1,9 +1,4 @@
 ext {
-    project = [
-            debugHttpBase  : '"https://www.wanandroid.com/"',
-            releaseHttpBase: '"https://www.wanandroid.com/"',
-            debugUserModule: true,  //调试user模块
-    ]
 
     android = [
             compileSdkVersion: 28,
@@ -16,9 +11,9 @@ ext {
 
     version = [
             androidSupportSdkVersion: "28.0.0",
-            retrofitSdkVersion      : "2.4.0",
+            retrofitSdkVersion      : "2.7.0",
             dagger2SdkVersion       : "2.19",
-            glideSdkVersion         : "4.9.0",
+            glideSdkVersion         : "4.10.0",
             butterknifeSdkVersion   : "8.8.1",
             rxlifecycleSdkVersion   : "1.0",
             rxlifecycle2SdkVersion  : "2.2.2",
@@ -30,7 +25,7 @@ ext {
             androidXSupportSdkVersion : "1.0.0",
             androidXEspressoSdkVersion: "3.2.0",
             androidXLifecycleVersion  : "2.2.0-alpha01",
-            androidXAutodispose       : "1.3.0"
+            androidXAutodispose       : "1.4.0"
     ]
 
     dependencies = [
@@ -49,13 +44,13 @@ ext {
             "retrofit-converter-fastjson": "org.ligboy.retrofit2:converter-fastjson-android:2.1.0",
             "retrofit-adapter-rxjava"    : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava2"   : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
-            "okhttp3"                    : "com.squareup.okhttp3:okhttp:3.11.0",
+            "okhttp3"                    : "com.squareup.okhttp3:okhttp:4.2.2",
             "okhttp-urlconnection"       : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
             "glide"                      : "com.github.bumptech.glide:glide:${version["glideSdkVersion"]}",
             "glide-compiler"             : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
             "glide-loader-okhttp3"       : "com.github.bumptech.glide:okhttp3-integration:${version["glideSdkVersion"]}",
             "picasso"                    : "com.squareup.picasso:picasso:2.5.2",
-            "retrofit-logging"           : "com.squareup.okhttp3:logging-interceptor:3.6.0",
+            "retrofit-logging"           : "com.squareup.okhttp3:logging-interceptor:4.2.2",
 
             //view
             "autolayout"                 : "com.zhy:autolayout:1.4.5",
@@ -70,8 +65,8 @@ ext {
             "autosize"                   : "me.jessyan:autosize:1.1.2",
 
             //rx2
-            "rxandroid2"                 : "io.reactivex.rxjava2:rxandroid:2.1.0",
-            "rxjava2"                    : "io.reactivex.rxjava2:rxjava:2.2.3",
+            "rxandroid2"                 : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            "rxjava2"                    : "io.reactivex.rxjava2:rxjava:2.2.8",
             "rxlifecycle2"               : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
             "rxlifecycle2-android"       : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
             "rxlifecycle2-components"    : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
@@ -100,7 +95,7 @@ ext {
             "bga-qrcode"                 : "cn.bingoogolapple:bga-qrcode-zxing:1.3.6",
             "wheelPicker"                : "cn.aigestudio.wheelpicker:WheelPicker:1.1.3",
             "mmkv"                       : "com.tencent:mmkv:1.0.22",
-            "rxbus"                      : "com.hwangjr.rxbus:rxbus:1.0.6",
+            "rxbus"                      : "com.hwangjr.rxbus:rxbus:2.0.1",
             "Android-SpinKit"            : "com.github.ybq:Android-SpinKit:1.4.0",
             "SmartRefreshLayout"         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0",
             "SmartRefreshHeader"         : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0",
@@ -137,7 +132,7 @@ ext {
             "lifcycle-extensions"       : "androidx.lifecycle:lifecycle-extensions:${versionX["androidXLifecycleVersion"]}",
 
             //tools
-            "multidex"                  : "androidx.multidex:multidex:2.0.0",
+            "multidex"                  : "androidx.multidex:multidex:2.0.1",
 
             "runner"                    : "androidx.test:runner:1.2.0",
             "espresso-core"             : "androidx.test.espresso:espresso-core:${versionX["androidXEspressoSdkVersion"]}",

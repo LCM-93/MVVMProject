@@ -1,0 +1,21 @@
+ext {
+    project = [
+            debugHttpBase  : '"https://www.wanandroid.com/"',
+            releaseHttpBase: '"https://www.wanandroid.com/"',
+    ]
+
+    modules = [
+            modulebase: project(":moduleCore:modulebase"),
+            mvvmbase  : project(":moduleCore:mvvmbase"),
+
+            easyPopup : project(":modulePublic:easyPopup"),
+            x5webview : project(":modulePublic:x5webview"),
+
+            usermodule: project(":moduleBusiness:usermodule")
+    ]
+
+    debug = [
+            usermodule: false   //调试user模块
+    ]
+
+}
