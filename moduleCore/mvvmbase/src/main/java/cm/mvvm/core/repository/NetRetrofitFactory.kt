@@ -19,7 +19,7 @@ import com.google.gson.GsonBuilder
  * Desc:
  * *****************************************************************
  */
-object NetRetrofitFactory {
+class NetRetrofitFactory {
     private var mTimeOut: Long = 10
     private var mOkHttpClient: OkHttpClient? = null
     private var mBaseUrl: String? = null

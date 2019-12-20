@@ -23,7 +23,8 @@ class NetRepository private constructor() {
     var api: Api? = null
 
     init {
-        retrofit = NetRetrofitFactory.baseUrl(BASE_URL)
+        retrofit = NetRetrofitFactory()
+            .baseUrl(BASE_URL)
             .logLevel(if (BuildConfig.DEBUG) RequestInterceptor.Level.ALL else RequestInterceptor.Level.NONE)
             .build()
         api = retrofit?.create(Api::class.java)

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import cm.module.core.plugins.manager.ActivityManager
 
 /**
@@ -43,5 +44,8 @@ class ActivityLifecycleCallbacksImp : Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(p0: Activity?, p1: Bundle?) {
         Log.i(TAG, "${p0?.javaClass?.simpleName} ---->onActivityCreated")
         ActivityManager.instance.addActivity(p0)
+        if(p0 is FragmentActivity){
+            p0.supportFragmentManager.registerFragmentLifecycleCallbacks(FragmentLifecycleCallbacksImp(),true)
+        }
     }
 }
