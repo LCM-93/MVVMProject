@@ -1,5 +1,6 @@
 package cm.module.core.data.remote.base
 
+import cm.module.core.data.remote.api.ApiBase
 import com.lcm.modulebase.BuildConfig
 import cm.mvvm.core.repository.NetRetrofitFactory
 import cm.mvvm.core.repository.http.log.RequestInterceptor
@@ -20,14 +21,14 @@ class NetRepository private constructor() {
     }
 
     private var retrofit: Retrofit? = null
-    var api: Api? = null
+    var api: ApiBase? = null
 
     init {
         retrofit = NetRetrofitFactory()
             .baseUrl(BASE_URL)
             .logLevel(if (BuildConfig.DEBUG) RequestInterceptor.Level.ALL else RequestInterceptor.Level.NONE)
             .build()
-        api = retrofit?.create(Api::class.java)
+        api = retrofit?.create(ApiBase::class.java)
     }
 
 }

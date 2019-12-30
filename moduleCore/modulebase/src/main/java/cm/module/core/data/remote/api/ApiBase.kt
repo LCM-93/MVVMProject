@@ -1,4 +1,4 @@
-package cm.module.core.data.remote.base
+package cm.module.core.data.remote.api
 
 import cm.module.core.data.entity.ApiResponse
 import cm.module.core.data.entity.LoginData
@@ -11,10 +11,10 @@ import retrofit2.http.POST
  * ****************************************************************
  * Author: LiChenMing.Chaman
  * Date: 2019/10/24 15:22
- * Desc:
+ * Desc: api接口  不同模块api接口建议创建单独的接口类  用ApiBase继承
  * *****************************************************************
  */
-interface Api {
+interface ApiBase {
 
     @POST("user/login")
     @FormUrlEncoded

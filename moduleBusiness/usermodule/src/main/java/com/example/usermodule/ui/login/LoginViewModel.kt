@@ -6,6 +6,7 @@ import cm.module.core.data.remote.UserApi
 import cm.mvvm.core.base.BaseViewModel
 import cm.mvvm.core.base.event.VMEvent
 import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.reactivex.Observable
 import java.lang.Exception
 
@@ -37,7 +38,7 @@ class LoginViewModel : BaseViewModel() {
                 }
                 .flatMap { UserApi.instance.login(userName.value, password.value) }
                 .doFinally { hideLoading(true) }
-                .autoDisposable(lifecycleScopeProvider)
+                .autoDispose(lifecycleScopeProvider)
                 .subscribe({
                     showToast("登录成功！！")
                     loginData.value = it

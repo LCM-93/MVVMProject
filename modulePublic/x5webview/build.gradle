@@ -1,12 +1,17 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion rootProject.ext.android['compileSdkVersion']
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.android['minSdkVersion']
+        targetSdkVersion rootProject.ext.android['targetSdkVersion']
+
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+
     }
 
     buildTypes {
