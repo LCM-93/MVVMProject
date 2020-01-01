@@ -63,8 +63,8 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.modules['mvvmbase']
 
-    kapt rootProject.ext.dependencies['arouter-compiler']
-    kapt rootProject.ext.dependencies['glide-compiler']
+//    kapt rootProject.ext.dependencies['arouter-compiler']
+//    kapt rootProject.ext.dependencies['glide-compiler']
     debugApi rootProject.ext.dependencies['canary-debug']
     releaseApi rootProject.ext.dependencies['canary-release']
 

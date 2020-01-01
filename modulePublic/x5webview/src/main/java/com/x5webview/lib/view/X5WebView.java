@@ -95,15 +95,7 @@ public class X5WebView extends WebView {
             sb.append("javascript:").append(function).append("(");
             if (params != null && params.length > 0) {
                 for (Object param : params) {
-                    if (param instanceof String) {
-                        sb.append("'").append(param).append("'").append(",");
-                    }
-                    if (param instanceof Integer) {
-                        sb.append(param).append(",");
-                    }
-                    if (param instanceof Boolean) {
-                        sb.append(param).append(",");
-                    }
+                    sb.append(param).append(",");
                 }
                 sb.deleteCharAt(sb.lastIndexOf(","));
             }

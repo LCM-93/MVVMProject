@@ -78,6 +78,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         }
     }
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return object : Dialog(activity, theme) {
             override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
