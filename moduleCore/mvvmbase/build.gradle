@@ -65,28 +65,59 @@ dependencies {
     api rootProject.ext.dependenciesX['recyclerview-v7']
     api rootProject.ext.dependenciesX['constraint-layout']
     api rootProject.ext.dependenciesX['lifcycle-extensions']
-    api rootProject.ext.dependenciesX['autodispose']
-    api rootProject.ext.dependenciesX['autodispose-android']
-    api rootProject.ext.dependenciesX['autodispose-archcomponents']
-    api rootProject.ext.dependenciesX['utils']
+    api (rootProject.ext.dependenciesX['autodispose']){
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+    api (rootProject.ext.dependenciesX['autodispose-android']){
+        exclude group: 'androidx.annotation', module: 'annotation'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxandroid'
+    }
+    api(rootProject.ext.dependenciesX['autodispose-archcomponents']) {
+        exclude group: 'androidx.annotation', module: 'annotation'
+        exclude group: 'androidx.lifecycle', module: 'lifecycle-runtime'
+    }
+    api(rootProject.ext.dependenciesX['utils']) {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
     api rootProject.ext.dependenciesX['multidex']
 
-    api rootProject.ext.dependencies['retrofit']
+    api(rootProject.ext.dependencies['retrofit']) {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
     api rootProject.ext.dependencies['retrofit-converter-gson']
-    api rootProject.ext.dependencies['retrofit-adapter-rxjava2']
+    api(rootProject.ext.dependencies['retrofit-adapter-rxjava2']) {
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
     api rootProject.ext.dependencies['retrofit-logging']
     api rootProject.ext.dependencies['okhttp3']
     api rootProject.ext.dependencies['rxandroid2']
     api rootProject.ext.dependencies['rxjava2']
-    api rootProject.ext.dependencies['rxkotlin2']
-    api rootProject.ext.dependencies["rxpermissions2"]
+    api(rootProject.ext.dependencies['rxkotlin2']) {
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
+    api(rootProject.ext.dependencies["rxpermissions2"]) {
+        exclude group: 'androidx.annotation', module: 'annotation'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
     api rootProject.ext.dependencies['autosize']
-    api rootProject.ext.dependencies['glide']
+    api(rootProject.ext.dependencies['glide']) {
+        exclude group: 'androidx.annotation', module: 'annotation'
+    }
 //    kapt rootProject.ext.dependencies['glide-compiler']
     api rootProject.ext.dependencies['arouter']
 //    kapt rootProject.ext.dependencies['arouter-compiler']
-    api rootProject.ext.dependencies['mmkv']
-    api rootProject.ext.dependencies['rxbus']
+    api(rootProject.ext.dependencies['mmkv']) {
+        exclude group: 'androidx.annotation', module: 'annotation'
+    }
+    api(rootProject.ext.dependencies['rxbus']) {
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxandroid'
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+        exclude group: 'androidx.annotation', module: 'annotation'
+    }
     debugApi rootProject.ext.dependencies['canary-debug']
     releaseApi rootProject.ext.dependencies['canary-release']
 
