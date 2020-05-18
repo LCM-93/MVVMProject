@@ -18,7 +18,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.event.LoadingStatus
 import com.lcm.mvvmbase.R
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -35,15 +34,12 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     private var instance: Any? = null
 
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(this)
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.BASE_ThemeDialog)
         viewModel = viewModel()
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
     }
 
 

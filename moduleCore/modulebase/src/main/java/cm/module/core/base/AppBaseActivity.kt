@@ -21,7 +21,7 @@ abstract class AppBaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : BaseA
 
 
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {
-        Log.e("TAG","统一处理 Loading状态")
+        Log.e("TAG","统一处理 Loading状态 ${loadingStatus?.status}")
     }
 
 }

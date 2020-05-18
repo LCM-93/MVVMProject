@@ -13,9 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
-import cm.mvvm.core.utils.RxBus
 import cm.mvvm.core.utils.StatusBarUtils
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
+import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -30,15 +29,12 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(this)
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerEventBus()
         viewModel = viewModel()
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
     }
 
     override fun onDestroy() {
@@ -171,13 +167,13 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
 
     private fun registerEventBus() {
         if (needEventBus()) {
-            RxBus.get().register(this)
+            EventBus.getDefault().register(this)
         }
     }
 
     private fun unRegisterEventBus() {
         if (needEventBus()) {
-            RxBus.get().unregister(this)
+            EventBus.getDefault().unregister(this)
         }
     }
 

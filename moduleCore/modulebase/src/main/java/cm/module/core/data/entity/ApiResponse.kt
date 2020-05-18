@@ -19,5 +19,9 @@ class ApiResponse<T> {
         return "ApiResponse(errorCode=$errorCode, errorMsg=$errorMsg, data=$data)"
     }
 
+    fun covertData(): T? {
+        if(errorCode == 0) return data
+        else throw Exception(errorMsg)
+    }
 
 }

@@ -11,9 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
-import cm.mvvm.core.utils.RxBus
 import cm.mvvm.core.utils.StatusBarUtils
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
+import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
 
 
@@ -29,7 +28,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +35,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         viewDataBinding = DataBindingUtil.setContentView(this, layoutId())
         viewModel = viewModel()
         viewDataBinding.lifecycleOwner = this
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
         setStatusBar()
         setStatusBarMode()
         initView()
@@ -168,13 +165,13 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     private fun registerEventBus(){
         if(needEventBus()){
-            RxBus.get().register(this)
+            EventBus.getDefault().register(this)
         }
     }
 
     private fun unRegisterEventBus(){
         if(needEventBus()){
-            RxBus.get().unregister(this)
+            EventBus.getDefault().unregister(this)
         }
     }
 
