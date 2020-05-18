@@ -24,8 +24,9 @@ ext {
     versionX = [
             androidXSupportSdkVersion : "1.0.0",
             androidXEspressoSdkVersion: "3.2.0",
-            androidXLifecycleVersion  : "2.2.0-alpha01",
-            androidXAutodispose       : "1.4.0"
+            androidXLifecycleVersion  : "2.2.0",
+            androidXAutodispose       : "1.4.0",
+            kotlinx_coroutines        : "1.3.1"
     ]
 
     dependencies = [
@@ -130,6 +131,7 @@ ext {
             "constraint-layout"         : "androidx.constraintlayout:constraintlayout:1.1.3",
 
             "lifcycle-extensions"       : "androidx.lifecycle:lifecycle-extensions:${versionX["androidXLifecycleVersion"]}",
+            "lifcycle-viewModel"        : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versionX["androidXLifecycleVersion"]}",
 
             //tools
             "multidex"                  : "androidx.multidex:multidex:2.0.1",
@@ -143,7 +145,12 @@ ext {
             "autodispose-android"       : "com.uber.autodispose:autodispose-android:${versionX["androidXAutodispose"]}",
             "autodispose-archcomponents": "com.uber.autodispose:autodispose-android-archcomponents:${versionX["androidXAutodispose"]}",
 
-            "utils"                     : "com.blankj:utilcodex:1.24.4"
+            "utils"                     : "com.blankj:utilcodex:1.24.4",
+
+            "coroutines-core"           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlin_coroutines"]}",
+            "coroutines-android"        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlin_coroutines"]}"
 
     ]
+
+
 }
