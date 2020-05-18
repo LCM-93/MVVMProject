@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import cm.mvvm.core.base.event.LoadingStatus
 import com.lcm.mvvmbase.R
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
@@ -137,9 +136,9 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProviders.of(activity!!).get(getVMClass())
+            ViewModelProvider(activity!!).get(getVMClass())
         } else {
-            ViewModelProviders.of(activity!!, viewModelFactory).get(getVMClass())
+            ViewModelProvider(activity!!,viewModelFactory!!).get(getVMClass())
         }
         return viewModel
     }
@@ -178,16 +177,16 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
      * 此方法使用commit会出现异常 java.lang.IllegalStateException: Can not perform this
      * action after onSaveInstanceState
      */
-    @Deprecated("此方法使用commit会出现异常")
-    override fun show(manager: FragmentManager, tag: String) {
+    @Deprecated("此方法使用commit会出现异常", ReplaceWith("fixedShow(activity, tag)"))
+    override fun show(manager: FragmentManager, tag: String?) {
         super.show(manager, tag)
     }
 
     /**
      * 同 [.show]
      */
-    @Deprecated("此方法使用commit会出现异常")
-    override fun show(transaction: FragmentTransaction, tag: String): Int {
+    @Deprecated("此方法使用commit会出现异常", ReplaceWith("fixedShow(activity, tag)"))
+    override fun show(transaction: FragmentTransaction, tag: String?): Int {
         return super.show(transaction, tag)
     }
 

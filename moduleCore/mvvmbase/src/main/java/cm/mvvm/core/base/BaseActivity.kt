@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
 import cm.mvvm.core.utils.RxBus
@@ -112,9 +111,9 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProviders.of(this).get(getVMClass())
+            ViewModelProvider(this).get(getVMClass())
         } else {
-            ViewModelProviders.of(this, viewModelFactory).get(getVMClass())
+            ViewModelProvider(this, viewModelFactory!!).get(getVMClass())
         }
         return viewModel
     }
