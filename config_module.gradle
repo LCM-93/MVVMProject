@@ -10,6 +10,7 @@ ext {
 
             easyPopup : project(":modulePublic:easyPopup"),
             x5webview : project(":modulePublic:x5webview"),
+            permission: project(":modulePublic:permissionutil"),
 
             usermodule: project(":moduleBusiness:usermodule")
     ]

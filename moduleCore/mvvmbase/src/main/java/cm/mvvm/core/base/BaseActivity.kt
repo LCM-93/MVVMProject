@@ -33,7 +33,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        RxBus.get().register(this)
+        registerEventBus()
         viewDataBinding = DataBindingUtil.setContentView(this, layoutId())
         viewModel = viewModel()
         viewDataBinding.lifecycleOwner = this
@@ -162,6 +162,23 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     open fun statusBarIsDarkMode(): Boolean = true
 
     /**
+     * 是否需要初始化EventBus
+     */
+    open fun needEventBus(): Boolean = false
+
+    private fun registerEventBus(){
+        if(needEventBus()){
+            RxBus.get().register(this)
+        }
+    }
+
+    private fun unRegisterEventBus(){
+        if(needEventBus()){
+            RxBus.get().unregister(this)
+        }
+    }
+
+    /**
      * 设置状态栏颜色
      */
     private fun setStatusBarMode() {
@@ -177,7 +194,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
 
     override fun onDestroy() {
+        unRegisterEventBus()
         super.onDestroy()
-        RxBus.get().unregister(this)
     }
 }

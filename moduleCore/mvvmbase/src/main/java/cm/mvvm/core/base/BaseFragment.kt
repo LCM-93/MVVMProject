@@ -36,20 +36,20 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        RxBus.get().register(this)
+        registerEventBus()
         viewModel = viewModel()
         viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
     }
 
     override fun onDestroy() {
+        unRegisterEventBus()
         super.onDestroy()
-        RxBus.get().unregister(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         viewDataBinding.lifecycleOwner = this
@@ -71,11 +71,11 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
 
     abstract fun layoutId(): Int
     abstract fun initView()
-    open fun initLoadingView(){}
+    open fun initLoadingView() {}
     abstract fun initData(savedInstanceState: Bundle?)
     open fun setListener() {}
     open fun observe() {}
-    open fun openPage(page:String,param:Any?){}
+    open fun openPage(page: String, param: Any?) {}
     /**
      * 处理ViewModel中的事件
      */
@@ -100,8 +100,8 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         })
         viewModel.openPage.observe(this, Observer {
             val pair = it.getContentIfNotHandled()
-            if(pair != null) {
-                openPage(pair.first,pair.second)
+            if (pair != null) {
+                openPage(pair.first, pair.second)
             }
         })
     }
@@ -121,7 +121,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         viewModel = if (viewModelFactory == null) {
             ViewModelProvider(activity!!).get(getVMClass())
         } else {
-            ViewModelProvider(activity!!,viewModelFactory!!).get(getVMClass())
+            ViewModelProvider(activity!!, viewModelFactory!!).get(getVMClass())
         }
         return viewModel
     }
@@ -162,6 +162,23 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
 
     fun showToast(msg: String) {
         Toast.makeText(activity?.applicationContext, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * 是否需要初始化EventBus
+     */
+    open fun needEventBus(): Boolean = false
+
+    private fun registerEventBus() {
+        if (needEventBus()) {
+            RxBus.get().register(this)
+        }
+    }
+
+    private fun unRegisterEventBus() {
+        if (needEventBus()) {
+            RxBus.get().unregister(this)
+        }
     }
 
 }

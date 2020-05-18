@@ -3,4 +3,5 @@ include ':app',
         'moduleCore:modulebase',
         'moduleCore:mvvmbase',
         'modulePublic:easyPopup',
-        'modulePublic:x5webview'
+        'modulePublic:x5webview',
+        'modulePublic:permissionutil'
