@@ -62,6 +62,9 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.modules['mvvmbase']
+//    api rootProject.ext.dependenciesX['cardview-v7']
+//    api rootProject.ext.dependenciesX['recyclerview-v7']
+//    api rootProject.ext.dependenciesX['constraint-layout']
 
 //    kapt rootProject.ext.dependencies['arouter-compiler']
 //    kapt rootProject.ext.dependencies['glide-compiler']
@@ -71,5 +74,6 @@ dependencies {
 
     api rootProject.ext.modules['easyPopup']
     api rootProject.ext.modules['x5webview']
+    api rootProject.ext.modules['permission']
 
 }
