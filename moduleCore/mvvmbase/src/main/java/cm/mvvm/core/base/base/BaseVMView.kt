@@ -34,6 +34,8 @@ interface BaseVMView {
 
     fun openPage(page: String, param: Any?)  //监听ViewModel中跳转页面标志
 
+    fun openDialog(dialog: String, param: Any?)
+
     fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT)
 
     fun needEventBus(): Boolean  //是否使用EventBus

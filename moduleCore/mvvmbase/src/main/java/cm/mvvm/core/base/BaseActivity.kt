@@ -68,6 +68,12 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
                 openPage(pair.first, pair.second)
             }
         })
+        viewModel.openDialog.observe(this, Observer {
+            val pair = it.getContentIfNotHandled()
+            if (pair != null) {
+                openDialog(pair.first, pair.second)
+            }
+        })
     }
 
 
@@ -117,6 +123,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     override fun setListener() {}
     override fun observe() {}
     override fun openPage(page: String, param: Any?) {}
+    override fun openDialog(dialog: String, param: Any?) {}
     override fun handleVMEvent(any: Any?) {}
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
     override fun finishActivity(result: Any?) {

@@ -7,6 +7,8 @@ import cm.module.core.data.entity.LoginData
 import cm.module.core.data.remote.UserApi
 import cm.mvvm.core.base.BaseViewModel
 import com.alibaba.android.arouter.launcher.ARouter
+import com.example.usermodule.config.EventConfig
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -57,6 +59,7 @@ class LoginViewModel : BaseViewModel() {
                 val data = UserApi.instance.login(userName.value, password.value)
                 loginData.value = data
                 showToast("登录成功")
+                openDialog(EventConfig.LOGIN_SUCCESS_DIALOG)
                 hideLoading(true)
             } catch (ex: Exception) {
                 showToast(ex.message ?: "未知错误")

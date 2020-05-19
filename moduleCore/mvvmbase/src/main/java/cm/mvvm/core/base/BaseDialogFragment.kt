@@ -104,6 +104,12 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
                 openPage(pair.first, pair.second)
             }
         })
+        viewModel.openDialog.observe(viewLifecycleOwner, Observer {
+            val pair = it.getContentIfNotHandled()
+            if (pair != null) {
+                openDialog(pair.first, pair.second)
+            }
+        })
     }
 
     /**
@@ -180,6 +186,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun setListener() {}
     override fun observe() {}
     override fun openPage(page: String, param: Any?) {}
+    override fun openDialog(dialog: String, param: Any?) {}
     override fun handleVMEvent(any: Any?) {}
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
 
