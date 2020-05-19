@@ -5,6 +5,7 @@ import androidx.databinding.ViewDataBinding
 import cm.mvvm.core.base.BaseActivity
 import cm.mvvm.core.base.BaseViewModel
 import cm.mvvm.core.base.event.LoadingStatus
+import org.greenrobot.eventbus.EventBus
 
 /**
  * ****************************************************************
@@ -16,12 +17,20 @@ import cm.mvvm.core.base.event.LoadingStatus
 abstract class AppBaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : BaseActivity<DB, VM>() {
 
     override fun initLoadingView() {
-        Log.e("TAG","初始化一个统一的LoadingView")
+        Log.e("TAG", "初始化一个统一的LoadingView")
     }
 
 
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {
-        Log.e("TAG","统一处理 Loading状态 ${loadingStatus?.status}")
+        Log.e("TAG", "统一处理 Loading状态 ${loadingStatus?.status}")
+    }
+
+    override fun registerEventBus() {
+        EventBus.getDefault().register(this)
+    }
+
+    override fun unRegisterEventBus() {
+        EventBus.getDefault().unregister(this)
     }
 
 }

@@ -1,6 +1,7 @@
 package cm.mvvm.core.base
 
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import cm.mvvm.core.base.base.BaseVMFragment
 import cm.mvvm.core.base.event.LoadingStatus
+import cm.mvvm.core.utils.StatusBarUtils
+import com.blankj.utilcode.util.BarUtils
 import com.lcm.mvvmbase.R
 import java.lang.reflect.ParameterizedType
 
@@ -27,7 +31,7 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : DialogFragment() {
+abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : DialogFragment(), BaseVMFragment {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -39,20 +43,21 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.BASE_ThemeDialog)
+        if (needEventBus()) registerEventBus()
         viewModel = viewModel()
     }
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         if (instance == null) {
             return null
         }
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        viewDataBinding.setLifecycleOwner(this)
+        viewDataBinding.lifecycleOwner = this
         return viewDataBinding.root
     }
 
@@ -82,37 +87,19 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         }
     }
 
-
-    abstract fun layoutId(): Int
-    abstract fun initView()
-    open fun initLoadingView() {}
-    abstract fun initData(savedInstanceState: Bundle?)
-    open fun setListener() {}
-    open fun observe() {}
-    open fun openPage(page: String, param: Any?) {}
-    /**
-     * 处理ViewModel中的事件
-     */
-    open fun handleEvent(any: Any?) {}
-
-    /**
-     * 处理加载事件
-     */
-    open fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
-
-    private fun baseObserve() {
-        viewModel.vmEvent.observe(this, Observer {
-            handleEvent(it?.getContentIfNotHandled())
+    override fun baseObserve() {
+        viewModel.vmEvent.observe(viewLifecycleOwner, Observer {
+            handleVMEvent(it?.getContentIfNotHandled())
         })
-        viewModel.loadStatus.observe(this, Observer {
-            handleEvent(it?.getContentIfNotHandled())
+        viewModel.loadStatus.observe(viewLifecycleOwner, Observer {
+            handleLoadingStatus(it?.getContentIfNotHandled())
         })
-        viewModel.toastMsg.observe(this, Observer {
+        viewModel.toastMsg.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { msg ->
                 showToast(msg)
             }
         })
-        viewModel.openPage.observe(this, Observer {
+        viewModel.openPage.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { pair ->
                 openPage(pair.first, pair.second)
             }
@@ -134,7 +121,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         viewModel = if (viewModelFactory == null) {
             ViewModelProvider(activity!!).get(getVMClass())
         } else {
-            ViewModelProvider(activity!!,viewModelFactory!!).get(getVMClass())
+            ViewModelProvider(activity!!, viewModelFactory!!).get(getVMClass())
         }
         return viewModel
     }
@@ -146,11 +133,6 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     private fun getVMClass(): Class<VM> {
         val type = this.javaClass.genericSuperclass as ParameterizedType
         return type.actualTypeArguments[1] as Class<VM>//<T>
-    }
-
-
-    fun showToast(msg: String) {
-        Toast.makeText(activity?.applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -185,5 +167,54 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun show(transaction: FragmentTransaction, tag: String?): Int {
         return super.show(transaction, tag)
     }
+
+
+    override fun showToast(msg: String, duration: Int) {
+        Toast.makeText(activity?.applicationContext, msg, duration).show()
+    }
+
+    override fun needEventBus(): Boolean = false
+    override fun registerEventBus() {}
+    override fun unRegisterEventBus() {}
+    override fun initLoadingView() {}
+    override fun setListener() {}
+    override fun observe() {}
+    override fun openPage(page: String, param: Any?) {}
+    override fun handleVMEvent(any: Any?) {}
+    override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
+
+    override fun onDestroy() {
+        if (needEventBus()) unRegisterEventBus()
+        super.onDestroy()
+    }
+
+    /**************************状态栏相关*****************************/
+    /**
+     * 设置状态栏
+     */
+    private fun setStatusBar() {
+        if (useImmersiveStatusBar()) {
+            if (fakeView() == null) {
+                BarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+            } else {
+                BarUtils.setStatusBarColor(fakeView()!!, statusBarColor())
+            }
+        }
+    }
+
+    /**
+     * 设置状态栏字体颜色
+     */
+    private fun setStatusBarMode() {
+        if (useImmersiveStatusBar()) {
+            StatusBarUtils.setStatusBarLightMode(activity!!, statusBarIsDarkMode())
+        }
+    }
+
+    override fun useImmersiveStatusBar(): Boolean = false
+    override fun statusBarColor(): Int = Color.WHITE
+    override fun fakeView(): View? = null
+    override fun statusBarIsDarkMode(): Boolean = true
+    /**************************状态栏相关*****************************/
 
 }
