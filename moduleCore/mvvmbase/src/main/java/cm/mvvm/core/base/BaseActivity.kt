@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import cm.mvvm.core.base.base.BaseVMActivity
 import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
-import cm.mvvm.core.utils.RxBus
 import cm.mvvm.core.utils.StatusBarUtils
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import java.lang.reflect.ParameterizedType
@@ -24,7 +24,7 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), BaseVMActivity {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -48,7 +48,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         initData(savedInstanceState)
     }
 
-    private fun baseObserve() {
+    override fun baseObserve() {
         viewModel.vmEvent.observe(this, Observer {
             handleVMEvent(it.getContentIfNotHandled())
         })
@@ -59,44 +59,20 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             handleLoadingStatus(it.getContentIfNotHandled())
         })
         viewModel.toastMsg.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {msg->
+            it.getContentIfNotHandled()?.let { msg ->
                 showToast(msg)
             }
         })
         viewModel.openPage.observe(this, Observer {
-            val pair = it.getContentIfNotHandled()
-            if(pair != null) {
-                openPage(pair.first,pair.second)
+            it.getContentIfNotHandled()?.let { pair ->
+                openPage(pair.first, pair.second)
             }
         })
-    }
-
-
-    abstract fun layoutId(): Int
-    abstract fun initView()
-    open fun initLoadingView(){}
-    open fun setListener() {}
-    open fun observe() {}
-    abstract fun initData(savedInstanceState: Bundle?)
-    open fun openPage(page:String,param:Any?){}
-
-
-    /**
-     * 处理ViewModel中的事件
-     */
-    open fun handleVMEvent(any: Any?) {}
-
-    /**
-     * 处理加载事件
-     */
-    open fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
-
-    /**
-     * 关闭Activity
-     * 若关闭Activity时需要传递参数到前一个页面，需要重写该方法
-     */
-    open fun finishActivity(result: Any?) {
-        finish()
+        viewModel.openDialog.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { pair ->
+                openDialog(pair.first, pair.second)
+            }
+        })
     }
 
     /**
@@ -128,21 +104,30 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         return type.actualTypeArguments[1] as Class<VM>
     }
 
-    /**
-     * 是否使用沉浸式状态栏
-     */
-    open fun useImmersiveStatusBar(): Boolean = true
 
-    /**
-     * 状态栏背景色
-     */
-    open fun statusBarColor(): Int = Color.WHITE
 
-    /**
-     * 当状态栏不是纯色时，可在布局中添加View，通过该方法设置该View的高度与状态栏一致
-     */
-    open fun fakeView(): View? = null
+    override fun initLoadingView() {}
+    override fun setListener() {}
+    override fun observe() {}
+    override fun openPage(page: String, param: Any?) {}
+    override fun openDialog(dialog: String, param: Any?) {}
+    override fun handleVMEvent(any: Any?) {}
+    override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
+    override fun needEventBus(): Boolean = false
+    override fun finishActivity(result: Any?) {
+        finish()
+    }
 
+    override fun showToast(msg: String, duration: Int) {
+        Toast.makeText(applicationContext, msg, duration).show()
+    }
+
+    override fun onDestroy() {
+        if(needEventBus())unRegisterEventBus()
+        super.onDestroy()
+    }
+
+    /************************************状态栏相关*****************************************/
     /**
      * 设置状态栏
      */
@@ -157,44 +142,17 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
     /**
-     * 设置状态栏的字体颜色 true 黑色  false 白色
-     */
-    open fun statusBarIsDarkMode(): Boolean = true
-
-    /**
-     * 是否需要初始化EventBus
-     */
-    open fun needEventBus(): Boolean = false
-
-    private fun registerEventBus(){
-        if(needEventBus()){
-            RxBus.get().register(this)
-        }
-    }
-
-    private fun unRegisterEventBus(){
-        if(needEventBus()){
-            RxBus.get().unregister(this)
-        }
-    }
-
-    /**
-     * 设置状态栏颜色
+     * 设置状态栏字体颜色
      */
     private fun setStatusBarMode() {
         if (useImmersiveStatusBar()) {
             StatusBarUtils.setStatusBarLightMode(this, statusBarIsDarkMode())
         }
     }
+    override fun useImmersiveStatusBar(): Boolean = true
+    override fun statusBarColor(): Int = Color.WHITE
+    override fun fakeView(): View? = null
+    override fun statusBarIsDarkMode(): Boolean = true
 
-
-    fun showToast(msg: String) {
-        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
-    }
-
-
-    override fun onDestroy() {
-        unRegisterEventBus()
-        super.onDestroy()
-    }
+    /************************************状态栏相关*****************************************/
 }

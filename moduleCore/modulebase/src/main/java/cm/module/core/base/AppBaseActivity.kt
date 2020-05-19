@@ -5,6 +5,7 @@ import androidx.databinding.ViewDataBinding
 import cm.mvvm.core.base.BaseActivity
 import cm.mvvm.core.base.BaseViewModel
 import cm.mvvm.core.base.event.LoadingStatus
+import cm.mvvm.core.utils.RxBus
 
 /**
  * ****************************************************************
@@ -24,4 +25,11 @@ abstract class AppBaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : BaseA
         Log.e("TAG","统一处理 Loading状态")
     }
 
+    override fun registerEventBus() {
+        RxBus.get().register(this)
+    }
+
+    override fun unRegisterEventBus() {
+        RxBus.get().unregister(this)
+    }
 }

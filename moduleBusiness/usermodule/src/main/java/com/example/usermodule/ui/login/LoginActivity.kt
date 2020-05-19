@@ -7,6 +7,7 @@ import com.example.usermodule.databinding.ActivityLoginBinding
 import cm.module.core.base.AppBaseActivity
 import cm.module.core.config.ARouterPath
 import cm.module.core.plugins.view.PopupManager
+import com.example.usermodule.config.EventConfig
 
 /**
  * ****************************************************************
@@ -28,9 +29,10 @@ class LoginActivity : AppBaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     }
 
-    override fun handleVMEvent(any: Any?) {
-        when (any) {
-            1 -> showDialog()
+
+    override fun openDialog(dialog: String, param: Any?) {
+        when (dialog) {
+            EventConfig.LOGIN_SUCCESS_DIALOG -> showDialog()
         }
     }
 
