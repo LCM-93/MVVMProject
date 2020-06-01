@@ -193,6 +193,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun onDestroy() {
         if (needEventBus()) unRegisterEventBus()
         super.onDestroy()
+        BaseApplication.refWatcher?.watch(this)
     }
 
     /**************************状态栏相关*****************************/

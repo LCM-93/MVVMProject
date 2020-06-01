@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.Utils
 import com.lcm.mvvmbase.BuildConfig
 import com.squareup.leakcanary.LeakCanary
+import com.squareup.leakcanary.RefWatcher
 import com.tencent.mmkv.MMKV
 import me.jessyan.autosize.AutoSizeConfig
 
@@ -16,13 +17,16 @@ import me.jessyan.autosize.AutoSizeConfig
  * *****************************************************************
  */
 open class BaseApplication : MultiDexApplication() {
+    companion object{
+        var refWatcher:RefWatcher? = null
+    }
 
     override fun onCreate() {
         super.onCreate()
 
         Utils.init(this)
         MMKV.initialize(this)
-        LeakCanary.install(this)
+        refWatcher =  LeakCanary.install(this)
 
         AutoSizeConfig.getInstance().isCustomFragment = true
 

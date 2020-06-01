@@ -137,6 +137,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         if (needEventBus()) unRegisterEventBus()
         mainScope.cancel()
         super.onDestroy()
+        BaseApplication.refWatcher?.watch(this)
     }
 
 
