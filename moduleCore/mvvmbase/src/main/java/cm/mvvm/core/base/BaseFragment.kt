@@ -134,6 +134,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
     override fun onDestroy() {
         if (needEventBus()) unRegisterEventBus()
         super.onDestroy()
+        BaseApplication.refWatcher?.watch(this)
     }
 
 
