@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMFragment
 import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
+import cm.mvvm.core.base.lazy.LazyFragment
 import cm.mvvm.core.utils.StatusBarUtils
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import java.lang.reflect.ParameterizedType
@@ -25,7 +25,7 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment(), BaseVMFragment {
+abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFragment(), BaseVMFragment {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -51,8 +51,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         return viewDataBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun lazyInit() {
         setStatusBar()
         setStatusBarMode()
         initView()
@@ -60,9 +59,8 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         setListener()
         baseObserve()
         observe()
-        initData(savedInstanceState)
+        initData()
     }
-
 
     override fun baseObserve() {
         viewModel.vmEvent.observe(this, Observer {

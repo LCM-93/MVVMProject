@@ -1,5 +1,6 @@
 package cm.mvvm.core.base.base
 
+
 /**
  * ****************************************************************
  * Author: LiChenMing.Chaman
@@ -9,4 +10,5 @@ package cm.mvvm.core.base.base
  */
 interface BaseVMFragment : BaseVMView {
 
+    fun initData()
 }

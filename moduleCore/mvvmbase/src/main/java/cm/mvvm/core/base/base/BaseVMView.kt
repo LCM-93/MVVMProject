@@ -1,6 +1,5 @@
 package cm.mvvm.core.base.base
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import cm.mvvm.core.base.event.LoadingStatus
@@ -17,8 +16,6 @@ interface BaseVMView {
     fun layoutId(): Int
 
     fun initView()
-
-    fun initData(savedInstanceState: Bundle?)
 
     fun initLoadingView() //初始化LoadingView
 

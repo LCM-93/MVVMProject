@@ -61,7 +61,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             return null
         }
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        viewDataBinding.setLifecycleOwner(this)
+        viewDataBinding.lifecycleOwner = this
         return viewDataBinding.root
     }
 
@@ -72,7 +72,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         setListener()
         baseObserve()
         observe()
-        initData(savedInstanceState)
+        initData()
     }
 
     override fun onResume() {
