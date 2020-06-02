@@ -8,5 +8,6 @@ package cm.mvvm.core.base.base
  * *****************************************************************
  */
 interface BaseVMFragment : BaseVMView {
+    fun initData()
 
 }

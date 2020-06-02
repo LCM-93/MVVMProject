@@ -68,7 +68,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         setListener()
         baseObserve()
         observe()
-        initData(savedInstanceState)
+        initData()
     }
 
     override fun onResume() {

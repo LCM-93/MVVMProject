@@ -1,5 +1,7 @@
 package cm.mvvm.core.base.base
 
+import android.os.Bundle
+
 /**
  * ****************************************************************
  * Author: LiChenMing.Chaman
@@ -8,6 +10,7 @@ package cm.mvvm.core.base.base
  * *****************************************************************
  */
 interface BaseVMActivity : BaseVMView {
+    fun initData(savedInstanceState: Bundle?)
 
     fun finishActivity(result: Any?)
 }

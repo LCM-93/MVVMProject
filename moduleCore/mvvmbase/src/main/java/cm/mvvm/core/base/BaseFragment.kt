@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMFragment
 import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
+import cm.mvvm.core.base.lazy.LazyFragment
 import cm.mvvm.core.utils.StatusBarUtils
 import kotlinx.coroutines.*
 import java.lang.reflect.ParameterizedType
@@ -25,7 +26,7 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment(), BaseVMFragment {
+abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFragment(), BaseVMFragment {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -50,8 +51,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         return viewDataBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun lazyInit() {
         setStatusBar()
         setStatusBarMode()
         initView()
@@ -59,7 +59,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
         setListener()
         baseObserve()
         observe()
-        initData(savedInstanceState)
+        initData()
     }
 
 
