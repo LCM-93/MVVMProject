@@ -1,6 +1,7 @@
 package cm.module.core.data.remote
 
 import cm.module.core.data.entity.LoginData
+import cm.module.core.data.remote.api.ApiUser
 import cm.module.core.data.remote.base.NetRepository
 import cm.module.core.utils.RxHelper
 import io.reactivex.Observable
@@ -13,6 +14,11 @@ import io.reactivex.Observable
  * *****************************************************************
  */
 class UserApi private constructor() {
+    private var apiUser:ApiUser? = null
+
+    init {
+        apiUser = NetRepository.instance.create(ApiUser::class.java)
+    }
 
     companion object {
         val instance: UserApi by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { UserApi() }
@@ -20,7 +26,7 @@ class UserApi private constructor() {
 
 
     fun login(username:String?,pwd:String?):Observable<LoginData>{
-        return NetRepository.instance.api?.login(username,pwd)!!
+        return apiUser?.login(username,pwd)!!
                 .compose(RxHelper.io_main())
                 .compose(RxHelper.handleResponse())
     }
