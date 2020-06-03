@@ -1,7 +1,8 @@
 package com.example.mvvmproject
 
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +19,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = ApplicationProvider.getApplicationContext<Context>()
         assertEquals("com.example.mvvmproject", appContext.packageName)
     }
 }

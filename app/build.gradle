@@ -71,5 +71,8 @@ dependencies {
 
     androidTestImplementation rootProject.ext.dependenciesX['runner']
     androidTestImplementation rootProject.ext.dependenciesX['espresso-core']
-    testImplementation rootProject.ext.dependencies['junit']
+    androidTestImplementation rootProject.ext.dependenciesX['test-ext-junit']
+    androidTestImplementation rootProject.ext.dependenciesX['test-core']
+    testImplementation rootProject.ext.dependenciesX['test-ext-junit']
+    testImplementation rootProject.ext.dependenciesX['test-core']
 }
