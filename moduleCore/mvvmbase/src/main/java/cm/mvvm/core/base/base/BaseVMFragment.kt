@@ -10,4 +10,6 @@ package cm.mvvm.core.base.base
 interface BaseVMFragment : BaseVMView {
     fun initData()
 
+    fun viewModelTag(): String?  //创建ViewModel时添加TAG，防止复用Fragment时仅创建一个ViewModel
+
 }
