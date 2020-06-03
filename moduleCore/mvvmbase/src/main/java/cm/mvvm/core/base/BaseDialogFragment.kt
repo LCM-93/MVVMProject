@@ -129,9 +129,21 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProvider(activity!!).get(getVMClass())
+            ViewModelProvider(activity!!).let {
+                if(viewModelTag() == null) {
+                    it.get(getVMClass())
+                }else{
+                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                }
+            }
         } else {
-            ViewModelProvider(activity!!, viewModelFactory!!).get(getVMClass())
+            ViewModelProvider(activity!!, viewModelFactory!!).let {
+                if(viewModelTag() == null){
+                    it.get(getVMClass())
+                }else{
+                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                }
+            }
         }
         return viewModel
     }
@@ -187,6 +199,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun handleVMEvent(any: Any?) {}
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
     override fun needEventBus(): Boolean = false
+    override fun viewModelTag(): String? = null
     override fun registerEventBus() {}
     override fun unRegisterEventBus() {}
 

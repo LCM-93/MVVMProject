@@ -42,9 +42,9 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         viewDataBinding.lifecycleOwner = this
@@ -99,9 +99,21 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProvider(activity!!).get(getVMClass())
+            ViewModelProvider(activity!!).let {
+                if(viewModelTag() == null) {
+                    it.get(getVMClass())
+                }else{
+                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                }
+            }
         } else {
-            ViewModelProvider(activity!!, viewModelFactory!!).get(getVMClass())
+            ViewModelProvider(activity!!, viewModelFactory!!).let {
+                if(viewModelTag() == null){
+                    it.get(getVMClass())
+                }else{
+                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                }
+            }
         }
         return viewModel
     }
@@ -124,6 +136,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     override fun handleVMEvent(any: Any?) {}
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
     override fun needEventBus(): Boolean = false
+    override fun viewModelTag(): String? = null
 
     override fun showToast(msg: String, duration: Int) {
         Toast.makeText(activity?.applicationContext, msg, duration).show()
