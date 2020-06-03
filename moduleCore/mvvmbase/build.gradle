@@ -93,8 +93,5 @@ dependencies {
     debugApi rootProject.ext.dependencies['canary-debug']
     releaseApi rootProject.ext.dependencies['canary-release']
 
-    androidTestImplementation rootProject.ext.dependenciesX['runner']
-    androidTestImplementation rootProject.ext.dependenciesX['espresso-core']
-    testImplementation rootProject.ext.dependencies['junit']
 
 }
