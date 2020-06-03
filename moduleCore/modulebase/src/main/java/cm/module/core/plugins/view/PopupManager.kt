@@ -50,6 +50,10 @@ object PopupManager {
                 dialogPopup?.dismiss()
                 ensureListener?.onEnsure()
             }
+        dialogPopup?.setOnDismissListener {
+            dialogPopup?.setContext(null)
+            dialogPopup = null
+        }
         dialogPopup?.showAtLocation(activity.window.decorView, Gravity.CENTER, 0, 0)
     }
 
