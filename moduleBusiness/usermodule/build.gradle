@@ -81,9 +81,12 @@ dependencies {
     kapt rootProject.ext.dependencies['glide-compiler']
 
     androidTestImplementation rootProject.ext.dependenciesX['runner']
+    androidTestImplementation rootProject.ext.dependenciesX['rules']
     androidTestImplementation rootProject.ext.dependenciesX['espresso-core']
-    androidTestImplementation rootProject.ext.dependenciesX['test-ext-junit']
+    androidTestImplementation rootProject.ext.dependenciesX['espresso-contrib']
+    androidTestImplementation rootProject.ext.dependenciesX['espresso-intents']
     androidTestImplementation rootProject.ext.dependenciesX['test-core']
-    testImplementation rootProject.ext.dependenciesX['test-ext-junit']
-    testImplementation rootProject.ext.dependenciesX['test-core']
+    androidTestImplementation rootProject.ext.dependenciesX['test-ext-junit']
+    androidTestImplementation rootProject.ext.dependenciesX['test-ext-truth']
+    testImplementation rootProject.ext.dependenciesX['junit']
 }

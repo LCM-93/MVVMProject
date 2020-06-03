@@ -139,8 +139,10 @@ ext {
 
             "test-core"                 : "androidx.test:core:${versionX["androidXTestCoreVersion"]}",
             "test-ext-junit"            : "androidx.test.ext:junit:1.1.1",
+            "test-ext-truth"            : "androidx.test.ext:truth:1.2.0",
             "junit"                     : "junit:junit:4.12",
             "runner"                    : "androidx.test:runner:1.2.0",
+            "rules"                     : "androidx.test:rules:1.2.0",
             "espresso-core"             : "androidx.test.espresso:espresso-core:${versionX["androidXEspressoSdkVersion"]}",
             "espresso-contrib"          : "androidx.test.espresso:espresso-contrib:${versionX["androidXEspressoSdkVersion"]}",
             "espresso-intents"          : "androidx.test.espresso:espresso-intents:${versionX["androidXEspressoSdkVersion"]}",
