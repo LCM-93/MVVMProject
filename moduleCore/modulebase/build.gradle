@@ -72,4 +72,9 @@ dependencies {
     api rootProject.ext.modules['easyPopup']
     api rootProject.ext.modules['x5webview']
 
+
+    androidTestImplementation rootProject.ext.dependenciesX['runner']
+    androidTestImplementation rootProject.ext.dependenciesX['espresso-core']
+    testImplementation rootProject.ext.dependencies['junit']
+
 }
