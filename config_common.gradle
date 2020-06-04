@@ -26,8 +26,7 @@ ext {
             androidXEspressoSdkVersion: "3.2.0",
             androidXLifecycleVersion  : "2.2.0",
             androidXAutodispose       : "1.4.0",
-            kotlinx_coroutines        : "1.3.1",
-            androidXTestCoreVersion   : "1.2.0"
+            kotlinx_coroutines        : "1.3.1"
     ]
 
     dependencies = [
@@ -134,27 +133,34 @@ ext {
             "lifcycle-extensions"       : "androidx.lifecycle:lifecycle-extensions:${versionX["androidXLifecycleVersion"]}",
             "lifcycle-viewModel"        : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versionX["androidXLifecycleVersion"]}",
 
+            "coroutines-core"           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlin_coroutines"]}",
+            "coroutines-android"        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlin_coroutines"]}",
+
             //tools
             "multidex"                  : "androidx.multidex:multidex:2.0.1",
-
-            "test-core"                 : "androidx.test:core:${versionX["androidXTestCoreVersion"]}",
-            "test-ext-junit"            : "androidx.test.ext:junit:1.1.1",
-            "test-ext-truth"            : "androidx.test.ext:truth:1.2.0",
-            "junit"                     : "junit:junit:4.12",
-            "runner"                    : "androidx.test:runner:1.2.0",
-            "rules"                     : "androidx.test:rules:1.2.0",
-            "espresso-core"             : "androidx.test.espresso:espresso-core:${versionX["androidXEspressoSdkVersion"]}",
-            "espresso-contrib"          : "androidx.test.espresso:espresso-contrib:${versionX["androidXEspressoSdkVersion"]}",
-            "espresso-intents"          : "androidx.test.espresso:espresso-intents:${versionX["androidXEspressoSdkVersion"]}",
-
+            "utils"                     : "com.blankj:utilcodex:1.24.4",
             "autodispose"               : "com.uber.autodispose:autodispose:${versionX["androidXAutodispose"]}",
             "autodispose-android"       : "com.uber.autodispose:autodispose-android:${versionX["androidXAutodispose"]}",
             "autodispose-archcomponents": "com.uber.autodispose:autodispose-android-archcomponents:${versionX["androidXAutodispose"]}",
 
-            "utils"                     : "com.blankj:utilcodex:1.24.4",
 
-            "coroutines-core"           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlin_coroutines"]}",
-            "coroutines-android"        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlin_coroutines"]}"
+            //单元测试相关
+            "junit"                     : "junit:junit:4.12",
+            "arch-test-core"            : "androidx.arch.core:core-testing:2.1.0",
+            "mockito-core"              : "org.mockito:mockito-core:2.8.9",
+            "dexmaker-mockito"          : "com.linkedin.dexmaker:dexmaker-mockito:2.12.1",
+            "hamcrest-all"              : "org.hamcrest:hamcrest-all:1.3",
+
+            "test-core"                 : "androidx.test:core:1.2.0",
+            "test-ext-junit"            : "androidx.test.ext:junit:1.1.1",
+            "test-ext-truth"            : "androidx.test.ext:truth:1.2.0",
+            "runner"                    : "androidx.test:runner:1.2.0",
+            "rules"                     : "androidx.test:rules:1.2.0",
+            "room-test"                 : "androidx.room:room-testing:2.0.0",
+            "espresso-core"             : "androidx.test.espresso:espresso-core:${versionX["androidXEspressoSdkVersion"]}",
+            "espresso-contrib"          : "androidx.test.espresso:espresso-contrib:${versionX["androidXEspressoSdkVersion"]}",
+            "espresso-intents"          : "androidx.test.espresso:espresso-intents:${versionX["androidXEspressoSdkVersion"]}",
+            "espresso-idling"           : "androidx.test.espresso.idling:idling-concurrent:${versionX["androidXEspressoSdkVersion"]}"
 
     ]
 
