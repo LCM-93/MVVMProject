@@ -2,11 +2,18 @@
 apply from: "config_common.gradle"
 apply from: "config_module.gradle"
 
+//https://maven.aliyun.com/mvn/guide 镜像源地址
 buildscript {
     ext.kotlin_version = '1.3.50'
     repositories {
         maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url "https://maven.aliyun.com/repository/public"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/google"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/gradle-plugin"
         }
         google()
         jcenter()
@@ -22,8 +29,14 @@ buildscript {
 
 allprojects {
     repositories {
+      maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
         maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url "https://maven.aliyun.com/repository/google"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/gradle-plugin"
         }
         maven { url 'https://jitpack.io' }
         google()
