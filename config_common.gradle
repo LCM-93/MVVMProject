@@ -26,7 +26,7 @@ ext {
             androidXEspressoSdkVersion: "3.2.0",
             androidXLifecycleVersion  : "2.2.0",
             androidXAutodispose       : "1.4.0",
-            kotlinx_coroutines        : "1.3.1",
+            kotlinxCoroutines         : "1.3.1",
             androidXRoomSdkVersion    : "2.2.5"
     ]
 
@@ -135,8 +135,8 @@ ext {
             "lifcycle-extensions"       : "androidx.lifecycle:lifecycle-extensions:${versionX["androidXLifecycleVersion"]}",
             "lifcycle-viewModel"        : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versionX["androidXLifecycleVersion"]}",
 
-            "coroutines-core"           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlin_coroutines"]}",
-            "coroutines-android"        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlin_coroutines"]}",
+            "coroutines-core"           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlinxCoroutines"]}",
+            "coroutines-android"        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlinxCoroutines"]}",
 
             "room-runtime"              : "androidx.room:room-runtime:${versionX["androidXRoomSdkVersion"]}",
             "room-compiler"             : "androidx.room:room-compiler:${versionX["androidXRoomSdkVersion"]}",
