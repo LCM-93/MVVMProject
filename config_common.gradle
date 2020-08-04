@@ -18,7 +18,9 @@ ext {
             rxlifecycleSdkVersion   : "1.0",
             rxlifecycle2SdkVersion  : "2.2.2",
             espressoSdkVersion      : "3.0.1",
-            canarySdkVersion        : "1.5.4"
+            canarySdkVersion        : "1.5.4",
+            gsyVideoSdkVersion      : "6.0.3",
+            smartRefreshSdkVersion  : "2.0.1"
     ]
 
     versionX = [
@@ -26,8 +28,11 @@ ext {
             androidXEspressoSdkVersion: "3.2.0",
             androidXLifecycleVersion  : "2.2.0",
             androidXAutodispose       : "1.4.0",
-            kotlinxCoroutines         : "1.3.1",
-            androidXRoomSdkVersion    : "2.2.5"
+            kotlinCoroutines          : "1.3.1",
+            androidXRoomSdkVersion    : "2.2.5",
+            gsyVideoSdkVersion        : "7.1.4",
+            smartRefreshSdkVersion    : "2.0.1",
+            bindingadapterSdkVersion  : "4.0.0"
     ]
 
     dependencies = [
@@ -99,8 +104,33 @@ ext {
             "mmkv"                       : "com.tencent:mmkv:1.0.22",
             "rxbus"                      : "com.hwangjr.rxbus:rxbus:2.0.1",
             "Android-SpinKit"            : "com.github.ybq:Android-SpinKit:1.4.0",
-            "SmartRefreshLayout"         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0",
-            "SmartRefreshHeader"         : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0",
+
+            "refresh-layout"             : "com.scwang.smart:refresh-layout-kernel:${version["smartRefreshSdkVersion"]}", //核心必须依赖
+            "refresh-header-classics"    : "com.scwang.smart:refresh-header-classics:${version["smartRefreshSdkVersion"]}", //经典刷新头
+            "refresh-header-radar"       : "com.scwang.smart:refresh-header-radar:${version["smartRefreshSdkVersion"]}", //雷达刷新头
+            "refresh-header-falsify"     : "com.scwang.smart:refresh-header-falsify:${version["smartRefreshSdkVersion"]}",//虚拟刷新头
+            "refresh-header-material"    : "com.scwang.smart:refresh-header-material:${version["smartRefreshSdkVersion"]}",//谷歌刷新头
+            "refresh-header-two-level"   : "com.scwang.smart:refresh-header-two-level:${version["smartRefreshSdkVersion"]}",//二级刷新头
+            "refresh-footer-ball"        : "com.scwang.smart:refresh-footer-ball:${version["smartRefreshSdkVersion"]}", //球脉冲加载
+            "refresh-footer-classics"    : "com.scwang.smart:refresh-footer-classics:${version["smartRefreshSdkVersion"]}",//经典加载
+
+
+            //完整依赖
+            "gsyvideoplayer-full"        : "com.shuyu:GSYVideoPlayer:${version["gsyVideoSdkVersion"]}",
+
+            //核心
+            "gsyvideoplayer-java"        : "com.shuyu:gsyVideoPlayer-java:${version["gsyVideoSdkVersion"]}",
+            //是否需要ExoPlayer模式
+            "gsyvideoplayer-exo2"        : "com.shuyu:GSYVideoPlayer-exo2:${version["gsyVideoSdkVersion"]}",
+            //根据你的需求ijk模式的so
+            "gsyvideoplayer-armv7a"      : "com.shuyu:gsyVideoPlayer-armv7a:${version["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-arm64"       : "com.shuyu:gsyVideoPlayer-arm64:${version["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-armv5"       : "com.shuyu:gsyVideoPlayer-armv5:${version["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-x64"         : "com.shuyu:gsyVideoPlayer-x64:${version["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-x86"         : "com.shuyu:gsyVideoPlayer-x86:${version["gsyVideoSdkVersion"]}",
+            //更多ijk的编码支持
+            "gsyvideoplayer-ex_so"       : "com.shuyu:gsyVideoPlayer-ex_so:${version["gsyVideoSdkVersion"]}",
+
 
             //test
             "junit"                      : "junit:junit:4.12",
@@ -118,56 +148,87 @@ ext {
 
 
 
-            "utils"                      : "com.blankj:utilcode:1.24.4",
+            "utils"                      : "com.blankj:utilcode:1.29.0",
             "calendarist"                : "org.hothub:calendarist:1.0.3"
     ]
 
     dependenciesX = [
             //androidx-support
-            "appcompat"                 : "androidx.appcompat:appcompat:${versionX["androidXSupportSdkVersion"]}",
-            "design"                    : "com.google.android.material:material:${versionX["androidXSupportSdkVersion"]}",
-            "support-v4"                : "androidx.legacy:legacy-support-v4:${versionX["androidXSupportSdkVersion"]}",
-            "cardview-v7"               : "androidx.cardview:cardview:${versionX["androidXSupportSdkVersion"]}",
-            "annotations"               : "androidx.annotation:annotation:${versionX["androidXSupportSdkVersion"]}",
-            "recyclerview-v7"           : "androidx.recyclerview:recyclerview:${versionX["androidXSupportSdkVersion"]}",
-            "constraint-layout"         : "androidx.constraintlayout:constraintlayout:1.1.3",
+            "appcompat"                  : "androidx.appcompat:appcompat:${versionX["androidXSupportSdkVersion"]}",
+            "design"                     : "com.google.android.material:material:${versionX["androidXSupportSdkVersion"]}",
+            "support-v4"                 : "androidx.legacy:legacy-support-v4:${versionX["androidXSupportSdkVersion"]}",
+            "cardview-v7"                : "androidx.cardview:cardview:${versionX["androidXSupportSdkVersion"]}",
+            "annotations"                : "androidx.annotation:annotation:${versionX["androidXSupportSdkVersion"]}",
+            "recyclerview-v7"            : "androidx.recyclerview:recyclerview:${versionX["androidXSupportSdkVersion"]}",
+            "constraint-layout"          : "androidx.constraintlayout:constraintlayout:1.1.3",
 
-            "lifcycle-extensions"       : "androidx.lifecycle:lifecycle-extensions:${versionX["androidXLifecycleVersion"]}",
-            "lifcycle-viewModel"        : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versionX["androidXLifecycleVersion"]}",
+            "lifcycle-extensions"        : "androidx.lifecycle:lifecycle-extensions:${versionX["androidXLifecycleVersion"]}",
+            "lifcycle-viewModel"         : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versionX["androidXLifecycleVersion"]}",
 
-            "coroutines-core"           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlinxCoroutines"]}",
-            "coroutines-android"        : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlinxCoroutines"]}",
-            
-            "room-runtime"              : "androidx.room:room-runtime:${versionX["androidXRoomSdkVersion"]}",
-            "room-compiler"             : "androidx.room:room-compiler:${versionX["androidXRoomSdkVersion"]}",
-            "room-ktx"                  : "androidx.room:room-ktx:${versionX["androidXRoomSdkVersion"]}",
-            "room-rxjava2"              : "androidx.room:room-rxjava2:${versionX["androidXRoomSdkVersion"]}",
+            "coroutines-core"            : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionX["kotlinCoroutines"]}",
+            "coroutines-android"         : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionX["kotlinCoroutines"]}",
+
+            "room-runtime"               : "androidx.room:room-runtime:${versionX["androidXRoomSdkVersion"]}",
+            "room-compiler"              : "androidx.room:room-compiler:${versionX["androidXRoomSdkVersion"]}",
+            "room-ktx"                   : "androidx.room:room-ktx:${versionX["androidXRoomSdkVersion"]}",
+            "room-rxjava2"               : "androidx.room:room-rxjava2:${versionX["androidXRoomSdkVersion"]}",
 
             //tools
-            "multidex"                  : "androidx.multidex:multidex:2.0.1",
-            "utils"                     : "com.blankj:utilcodex:1.24.4",
-            "autodispose"               : "com.uber.autodispose:autodispose:${versionX["androidXAutodispose"]}",
-            "autodispose-android"       : "com.uber.autodispose:autodispose-android:${versionX["androidXAutodispose"]}",
-            "autodispose-archcomponents": "com.uber.autodispose:autodispose-android-archcomponents:${versionX["androidXAutodispose"]}",
+            "multidex"                   : "androidx.multidex:multidex:2.0.1",
+            "utils"                      : "com.blankj:utilcodex:1.29.0",
+            "autodispose"                : "com.uber.autodispose:autodispose:${versionX["androidXAutodispose"]}",
+            "autodispose-android"        : "com.uber.autodispose:autodispose-android:${versionX["androidXAutodispose"]}",
+            "autodispose-archcomponents" : "com.uber.autodispose:autodispose-android-archcomponents:${versionX["androidXAutodispose"]}",
+
+            "refresh-layout"             : "com.scwang.smart:refresh-layout-kernel:${versionX["smartRefreshSdkVersion"]}", //核心必须依赖
+            "refresh-header-classics"    : "com.scwang.smart:refresh-header-classics:${versionX["smartRefreshSdkVersion"]}", //经典刷新头
+            "refresh-header-radar"       : "com.scwang.smart:refresh-header-radar:${versionX["smartRefreshSdkVersion"]}", //雷达刷新头
+            "refresh-header-falsify"     : "com.scwang.smart:refresh-header-falsify:${versionX["smartRefreshSdkVersion"]}",//虚拟刷新头
+            "refresh-header-material"    : "com.scwang.smart:refresh-header-material:${versionX["smartRefreshSdkVersion"]}",//谷歌刷新头
+            "refresh-header-two-level"   : "com.scwang.smart:refresh-header-two-level:${versionX["smartRefreshSdkVersion"]}",//二级刷新头
+            "refresh-footer-ball"        : "com.scwang.smart:refresh-footer-ball:${versionX["smartRefreshSdkVersion"]}", //球脉冲加载
+            "refresh-footer-classics"    : "com.scwang.smart:refresh-footer-classics:${versionX["smartRefreshSdkVersion"]}",//经典加载
+
+
+            "bindingadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:${versionX["bindingadapterSdkVersion"]}",
+            "bindingadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:${versionX["bindingadapterSdkVersion"]}",
+            "bindingadapter-viewpager"   : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-viewpager2:${versionX["bindingadapterSdkVersion"]}",
+
+
+            //完整依赖
+            "gsyvideoplayer-full"        : "com.shuyu:GSYVideoPlayer:${versionX["gsyVideoSdkVersion"]}",
+
+            //核心
+            "gsyvideoplayer-java"        : "com.shuyu:gsyVideoPlayer-java:${versionX["gsyVideoSdkVersion"]}",
+            //是否需要ExoPlayer模式
+            "gsyvideoplayer-exo2"        : "com.shuyu:GSYVideoPlayer-exo2:${versionX["gsyVideoSdkVersion"]}",
+            //根据你的需求ijk模式的so
+            "gsyvideoplayer-armv7a"      : "com.shuyu:gsyVideoPlayer-armv7a:${versionX["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-arm64"       : "com.shuyu:gsyVideoPlayer-arm64:${versionX["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-armv5"       : "com.shuyu:gsyVideoPlayer-armv5:${versionX["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-x64"         : "com.shuyu:gsyVideoPlayer-x64:${versionX["gsyVideoSdkVersion"]}",
+            "gsyvideoplayer-x86"         : "com.shuyu:gsyVideoPlayer-x86:${versionX["gsyVideoSdkVersion"]}",
+            //更多ijk的编码支持
+            "gsyvideoplayer-ex_so"       : "com.shuyu:gsyVideoPlayer-ex_so:${versionX["gsyVideoSdkVersion"]}",
 
 
             //单元测试相关
-            "junit"                     : "junit:junit:4.12",
-            "arch-test-core"            : "androidx.arch.core:core-testing:2.1.0",
-            "mockito-core"              : "org.mockito:mockito-core:2.8.9",
-            "dexmaker-mockito"          : "com.linkedin.dexmaker:dexmaker-mockito:2.12.1",
-            "hamcrest-all"              : "org.hamcrest:hamcrest-all:1.3",
+            "junit"                      : "junit:junit:4.12",
+            "arch-test-core"             : "androidx.arch.core:core-testing:2.1.0",
+            "mockito-core"               : "org.mockito:mockito-core:2.8.9",
+            "dexmaker-mockito"           : "com.linkedin.dexmaker:dexmaker-mockito:2.12.1",
+            "hamcrest-all"               : "org.hamcrest:hamcrest-all:1.3",
 
-            "test-core"                 : "androidx.test:core:1.2.0",
-            "test-ext-junit"            : "androidx.test.ext:junit:1.1.1",
-            "test-ext-truth"            : "androidx.test.ext:truth:1.2.0",
-            "runner"                    : "androidx.test:runner:1.2.0",
-            "rules"                     : "androidx.test:rules:1.2.0",
-            "room-test"                 : "androidx.room:room-testing:2.0.0",
-            "espresso-core"             : "androidx.test.espresso:espresso-core:${versionX["androidXEspressoSdkVersion"]}",
-            "espresso-contrib"          : "androidx.test.espresso:espresso-contrib:${versionX["androidXEspressoSdkVersion"]}",
-            "espresso-intents"          : "androidx.test.espresso:espresso-intents:${versionX["androidXEspressoSdkVersion"]}",
-            "espresso-idling"           : "androidx.test.espresso.idling:idling-concurrent:${versionX["androidXEspressoSdkVersion"]}"
+            "test-core"                  : "androidx.test:core:1.2.0",
+            "test-ext-junit"             : "androidx.test.ext:junit:1.1.1",
+            "test-ext-truth"             : "androidx.test.ext:truth:1.2.0",
+            "runner"                     : "androidx.test:runner:1.2.0",
+            "rules"                      : "androidx.test:rules:1.2.0",
+            "room-test"                  : "androidx.room:room-testing:2.0.0",
+            "espresso-core"              : "androidx.test.espresso:espresso-core:${versionX["androidXEspressoSdkVersion"]}",
+            "espresso-contrib"           : "androidx.test.espresso:espresso-contrib:${versionX["androidXEspressoSdkVersion"]}",
+            "espresso-intents"           : "androidx.test.espresso:espresso-intents:${versionX["androidXEspressoSdkVersion"]}",
+            "espresso-idling"            : "androidx.test.espresso.idling:idling-concurrent:${versionX["androidXEspressoSdkVersion"]}"
 
     ]
 
