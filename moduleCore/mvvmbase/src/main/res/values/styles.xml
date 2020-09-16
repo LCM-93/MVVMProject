@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Window.DialogAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/mc__fade_in</item>
+        <item name="android:windowExitAnimation">@anim/mc__fade_out</item>
+    </style>
+
     <style name="BASE_ThemeDialog" parent="android:Theme">
-        <item name="android:windowBackground">@color/base_dialog_background</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/Window.DialogAnimation</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowSoftInputMode">stateHidden|adjustPan</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
 </resources>
