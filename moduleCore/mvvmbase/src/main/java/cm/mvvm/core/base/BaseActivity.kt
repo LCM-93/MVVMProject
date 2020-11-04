@@ -24,7 +24,8 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), BaseVMActivity {
+abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(),
+    BaseVMActivity {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -107,7 +108,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
 
-
     override fun showToast(msg: String, duration: Int) {
         Toast.makeText(applicationContext, msg, duration).show()
     }
@@ -129,7 +129,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     override fun finishActivity(result: Any?) {
         finish()
     }
-
 
 
     /**************************状态栏相关*****************************/
@@ -174,10 +173,10 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             handleException({
                 if (showLoading) viewModel.showLoading()
                 block()
-                viewModel.hideLoading(true)
+                if (showLoading) viewModel.hideLoading(true)
             }, {
                 error(it)
-                viewModel.hideLoading(false)
+                if (showLoading) viewModel.hideLoading(false)
             }, { complete() })
         }
     }

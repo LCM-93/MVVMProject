@@ -26,7 +26,8 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFragment(), BaseVMFragment {
+abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFragment(),
+    BaseVMFragment {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -104,18 +105,18 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
             ViewModelProvider(activity!!).let {
-                if(viewModelTag() == null) {
+                if (viewModelTag() == null) {
                     it.get(getVMClass())
-                }else{
-                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                } else {
+                    it.get("BaseFragment : $tag : ${viewModelTag()}", getVMClass())
                 }
             }
         } else {
             ViewModelProvider(activity!!, viewModelFactory!!).let {
-                if(viewModelTag() == null){
+                if (viewModelTag() == null) {
                     it.get(getVMClass())
-                }else{
-                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                } else {
+                    it.get("BaseFragment : $tag : ${viewModelTag()}", getVMClass())
                 }
             }
         }
@@ -144,7 +145,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     override fun openDialog(dialog: String, param: Any?) {}
     override fun handleVMEvent(any: Any?) {}
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
-    override fun viewModelTag(): String?  = null
+    override fun viewModelTag(): String? = null
 
     override fun onDestroy() {
         if (needEventBus()) unRegisterEventBus()
@@ -197,10 +198,10 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
             handleException({
                 if (showLoading) viewModel.showLoading()
                 block()
-                viewModel.hideLoading(true)
+                if (showLoading) viewModel.hideLoading(true)
             }, {
                 error(it)
-                viewModel.hideLoading(false)
+                if (showLoading) viewModel.hideLoading(false)
             }, { complete() })
         }
     }

@@ -51,21 +51,28 @@ class LoginViewModel : BaseViewModel() {
 //    }
 
     fun login() {
-        viewModelScope.launch {
-            try {
-                showLoading()
-                checkIsEmpty(userName, "用户名不能为空")
-                checkIsEmpty(password, "密码不能为空")
-                val data = UserApi.instance.login(userName.value, password.value)
-                loginData.value = data
-                showToast("登录成功")
-                openDialog(EventConfig.LOGIN_SUCCESS_DIALOG)
-                hideLoading(true)
-            } catch (ex: Exception) {
-                showToast(ex.message ?: "未知错误")
-                hideLoading(false)
-            }
-        }
+        launchUI({
+            checkIsEmpty(userName, "用户名不能为空")
+            checkIsEmpty(password, "密码不能为空")
+            loginData.value = UserApi.instance.login(userName.value, password.value)
+            showToast("登录成功")
+            openDialog(EventConfig.LOGIN_SUCCESS_DIALOG)
+        })
+//        viewModelScope.launch {
+//            try {
+//                showLoading()
+//                checkIsEmpty(userName, "用户名不能为空")
+//                checkIsEmpty(password, "密码不能为空")
+//                val data = UserApi.instance.login(userName.value, password.value)
+//                loginData.value = data
+//                showToast("登录成功")
+//                openDialog(EventConfig.LOGIN_SUCCESS_DIALOG)
+//                hideLoading(true)
+//            } catch (ex: Exception) {
+//                showToast(ex.message ?: "未知错误")
+//                hideLoading(false)
+//            }
+//        }
     }
 
     fun clickRegister() {

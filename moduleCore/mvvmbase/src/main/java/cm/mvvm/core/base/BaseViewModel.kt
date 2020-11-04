@@ -56,16 +56,18 @@ abstract class BaseViewModel : ViewModel() {
         block: suspend CoroutineScope.() -> Unit,
         error: suspend CoroutineScope.(Exception) -> Unit = {},
         complete: suspend CoroutineScope.() -> Unit = {},
-        showLoading: Boolean = true
+        showLoading: Boolean = true,
+        showErrorToast: Boolean = true
     ) {
         viewModelScope.launch {
             handleException({
                 if (showLoading) showLoading()
                 block()
-                hideLoading(true)
+                if (showLoading) hideLoading(true)
             }, {
+                if (showErrorToast) showToast(it.message ?: "未知错误")
                 error(it)
-                hideLoading(false)
+                if (showLoading) hideLoading(false)
             }, { complete() })
         }
     }
