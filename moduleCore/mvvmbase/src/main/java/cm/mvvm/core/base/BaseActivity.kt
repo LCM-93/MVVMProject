@@ -10,9 +10,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMActivity
-import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
 import cm.mvvm.core.utils.StatusBarUtils
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import java.lang.reflect.ParameterizedType
 
@@ -29,7 +30,9 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
+    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(
+        this
+    ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,6 +139,11 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             if (fakeView() == null) {
                 BarUtils.setStatusBarColor(this, Color.TRANSPARENT)
             } else {
+                if (BarUtils.getStatusBarHeight() > SizeUtils.dp2px(20f)) {
+                    val layoutParams = fakeView()!!.layoutParams
+                    layoutParams.height = BarUtils.getStatusBarHeight()
+                    fakeView()!!.layoutParams = layoutParams
+                }
                 BarUtils.setStatusBarColor(fakeView()!!, statusBarColor())
             }
         }

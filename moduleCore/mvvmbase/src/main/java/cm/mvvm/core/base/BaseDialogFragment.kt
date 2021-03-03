@@ -21,6 +21,7 @@ import cm.mvvm.core.base.base.BaseVMFragment
 import cm.mvvm.core.base.event.LoadingStatus
 import cm.mvvm.core.utils.StatusBarUtils
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.lcm.mvvmbase.R
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import java.lang.reflect.ParameterizedType
@@ -220,6 +221,11 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             if (fakeView() == null) {
                 BarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
             } else {
+                if (BarUtils.getStatusBarHeight() > SizeUtils.dp2px(20f)) {
+                    val layoutParams = fakeView()!!.layoutParams
+                    layoutParams.height = BarUtils.getStatusBarHeight()
+                    fakeView()!!.layoutParams = layoutParams
+                }
                 BarUtils.setStatusBarColor(fakeView()!!, statusBarColor())
             }
         }

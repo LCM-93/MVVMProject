@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.BarUtils
 import cm.mvvm.core.base.event.LoadingStatus
 import cm.mvvm.core.base.lazy.LazyFragment
 import cm.mvvm.core.utils.StatusBarUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import java.lang.reflect.ParameterizedType
 
@@ -155,6 +156,11 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
             if (fakeView() == null) {
                 BarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
             } else {
+                if (BarUtils.getStatusBarHeight() > SizeUtils.dp2px(20f)) {
+                    val layoutParams = fakeView()!!.layoutParams
+                    layoutParams.height = BarUtils.getStatusBarHeight()
+                    fakeView()!!.layoutParams = layoutParams
+                }
                 BarUtils.setStatusBarColor(fakeView()!!, statusBarColor())
             }
         }
