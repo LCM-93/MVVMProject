@@ -105,23 +105,28 @@ public class SharedPreferencesUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getValue(String key, @NonNull T defaultValue) {
         if (sp == null) {
             Log.e(TAG, "SharedPreferences is null");
-            return null;
+            return defaultValue;
         }
-        if (defaultValue instanceof String) {
-            return (T) sp.getString(key, (String) defaultValue);
-        } else if (defaultValue instanceof Boolean) {
-            return (T) new Boolean(sp.getBoolean(key, (Boolean) defaultValue));
-        } else if (defaultValue instanceof Long) {
-            return (T) new Long(sp.getLong(key, (Long) defaultValue));
-        } else if (defaultValue instanceof Float) {
-            return (T) new Float(sp.getFloat(key, (Float) defaultValue));
-        } else if (defaultValue instanceof Integer) {
-            return (T) new Integer(sp.getInt(key, (Integer) defaultValue));
+        try {
+            if (defaultValue instanceof String) {
+                return (T) sp.getString(key, (String) defaultValue);
+            } else if (defaultValue instanceof Boolean) {
+                return (T) Boolean.valueOf(sp.getBoolean(key, (Boolean) defaultValue));
+            } else if (defaultValue instanceof Long) {
+                return (T) Long.valueOf(sp.getLong(key, (Long) defaultValue));
+            } else if (defaultValue instanceof Float) {
+                return (T) Float.valueOf(sp.getFloat(key, (Float) defaultValue));
+            } else if (defaultValue instanceof Integer) {
+                return (T) Integer.valueOf(sp.getInt(key, (Integer) defaultValue));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return null;
+        return defaultValue;
     }
 
 
