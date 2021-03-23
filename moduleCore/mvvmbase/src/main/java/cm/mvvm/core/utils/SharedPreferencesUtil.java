@@ -3,10 +3,10 @@ package cm.mvvm.core.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.util.Log;
+import androidx.annotation.NonNull;
 
-import com.sdo.sdaccountkey.app.App;
+import com.blankj.utilcode.util.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class SharedPreferencesUtil {
     }
 
     private SharedPreferencesUtil(String db_name) {
-        Context context = App.getInstance();
+        Context context = Utils.getApp();
         if (context == null) {
             Log.e(TAG, "Context is null");
             return;
@@ -104,23 +104,28 @@ public class SharedPreferencesUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getValue(String key, @NonNull T defaultValue) {
         if (sp == null) {
             Log.e(TAG, "SharedPreferences is null");
-            return null;
+            return defaultValue;
         }
-        if (defaultValue instanceof String) {
-            return (T) sp.getString(key, (String) defaultValue);
-        } else if (defaultValue instanceof Boolean) {
-            return (T) new Boolean(sp.getBoolean(key, (Boolean) defaultValue));
-        } else if (defaultValue instanceof Long) {
-            return (T) new Long(sp.getLong(key, (Long) defaultValue));
-        } else if (defaultValue instanceof Float) {
-            return (T) new Float(sp.getFloat(key, (Float) defaultValue));
-        } else if (defaultValue instanceof Integer) {
-            return (T) new Integer(sp.getInt(key, (Integer) defaultValue));
+        try {
+            if (defaultValue instanceof String) {
+                return (T) sp.getString(key, (String) defaultValue);
+            } else if (defaultValue instanceof Boolean) {
+                return (T) Boolean.valueOf(sp.getBoolean(key, (Boolean) defaultValue));
+            } else if (defaultValue instanceof Long) {
+                return (T) Long.valueOf(sp.getLong(key, (Long) defaultValue));
+            } else if (defaultValue instanceof Float) {
+                return (T) Float.valueOf(sp.getFloat(key, (Float) defaultValue));
+            } else if (defaultValue instanceof Integer) {
+                return (T) Integer.valueOf(sp.getInt(key, (Integer) defaultValue));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return null;
+        return defaultValue;
     }
 
 
