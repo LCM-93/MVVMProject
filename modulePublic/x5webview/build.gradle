@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.android['compileSdkVersion']
+    ndkVersion rootProject.ext.android['ndkVersion']
 
     defaultConfig {
         minSdkVersion rootProject.ext.android['minSdkVersion']
@@ -11,6 +12,7 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86"
         }
+
 
     }
 

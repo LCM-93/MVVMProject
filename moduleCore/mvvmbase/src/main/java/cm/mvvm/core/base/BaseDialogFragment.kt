@@ -85,7 +85,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return object : Dialog(activity, theme) {
+        return object : Dialog(activity!!, theme) {
             override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
                 return super.dispatchTouchEvent(ev)
             }
@@ -94,23 +94,23 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
 
     override fun baseObserve() {
-        viewModel.vmEvent.observe(this, Observer {
+        viewModel.vmEvent.observe(viewLifecycleOwner, Observer {
             handleVMEvent(it?.getContentIfNotHandled())
         })
-        viewModel.loadStatus.observe(this, Observer {
+        viewModel.loadStatus.observe(viewLifecycleOwner, Observer {
             handleLoadingStatus(it?.getContentIfNotHandled())
         })
-        viewModel.toastMsg.observe(this, Observer {
+        viewModel.toastMsg.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { msg ->
                 showToast(msg)
             }
         })
-        viewModel.openPage.observe(this, Observer {
+        viewModel.openPage.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { pair ->
                 openPage(pair.first, pair.second)
             }
         })
-        viewModel.openDialog.observe(this, Observer {
+        viewModel.openDialog.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { pair ->
                 openDialog(pair.first, pair.second)
             }

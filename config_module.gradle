@@ -17,7 +17,7 @@ ext {
     ]
 
     debug = [
-            usermodule: true   //调试user模块
+            usermodule: false   //调试user模块
     ]
 
 }

@@ -219,7 +219,12 @@ public class PermissionUtil {
         }
         int auth = ActivityCompat.checkSelfPermission(activity, permission);
         AppOpsManager appOpsManager = (AppOpsManager) activity.getSystemService(Context.APP_OPS_SERVICE);
-        int checkOp = appOpsManager.checkOpNoThrow( AppOpsManager.OPSTR_FINE_LOCATION, Binder.getCallingUid(), activity.getPackageName());
+        int checkOp;
+        if(Build.VERSION.SDK_INT <29){
+             checkOp = appOpsManager.checkOpNoThrow( AppOpsManager.OPSTR_FINE_LOCATION, Binder.getCallingUid(), activity.getPackageName());
+        }else{
+             checkOp = appOpsManager.unsafeCheckOpNoThrow( AppOpsManager.OPSTR_FINE_LOCATION, Binder.getCallingUid(), activity.getPackageName());
+        }
         if (auth == PackageManager.PERMISSION_GRANTED && checkOp == AppOpsManager.MODE_ALLOWED) {
             return PERMISSION_GRANTED;
         }

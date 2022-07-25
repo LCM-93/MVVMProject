@@ -2,12 +2,11 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android['compileSdkVersion']
+    ndkVersion rootProject.ext.android['ndkVersion']
     defaultConfig {
         applicationId "com.example.mvvmproject"
         minSdkVersion rootProject.ext.android['minSdkVersion']
@@ -51,9 +50,10 @@ android {
         jvmTarget = '1.8'
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
+
 
     lintOptions {
         disable 'GoogleAppIndexingWarning'
