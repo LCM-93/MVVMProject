@@ -1,12 +1,13 @@
 ext {
 
     android = [
-            compileSdkVersion: 28,
-            buildToolsVersion: "28.0.3",
+            compileSdkVersion: 30,
+            buildToolsVersion: "30.0.1",
             minSdkVersion    : 19,
-            targetSdkVersion : 28,
+            targetSdkVersion : 30,
             versionCode      : 1,
-            versionName      : "1.0.0"
+            versionName      : "1.0.0",
+            ndkVersion       : "20.1.5948944"
     ]
 
     version = [
@@ -94,8 +95,9 @@ ext {
             "gson"                       : "com.google.code.gson:gson:2.8.5",
             "multidex"                   : "com.android.support:multidex:1.0.3",
             "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
-            "arouter"                    : "com.alibaba:arouter-api:1.5.0",
-            "arouter-compiler"           : "com.alibaba:arouter-compiler:1.2.2",
+            "arouter"                    : "com.alibaba:arouter-api:1.5.2",
+            "arouter-compiler"           : "com.alibaba:arouter-compiler:1.5.2",
+            "arouter-register"           : "com.alibaba:arouter-register:1.0.2",
             "progressmanager"            : "me.jessyan:progressmanager:1.5.0",
             "retrofit-url-manager"       : "me.jessyan:retrofit-url-manager:1.4.0",
             "lifecyclemodel"             : "me.jessyan:lifecyclemodel:1.0.1",
