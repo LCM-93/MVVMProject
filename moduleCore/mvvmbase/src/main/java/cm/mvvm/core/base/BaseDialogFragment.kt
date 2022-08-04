@@ -4,10 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -46,7 +43,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.BASE_ThemeDialog)
+        setStyle(STYLE_NO_TITLE, 0)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
         viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
@@ -68,6 +65,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initDialogView()
         initView()
         initLoadingView()
         setListener()
@@ -75,6 +73,26 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         observe()
         initData()
     }
+
+    private fun initDialogView() {
+        if (dialog != null && dialog!!.window != null) {
+            val window = dialog!!.window
+            val params = window!!.attributes
+            params.gravity = gravity()
+            window.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            window.decorView.setPadding(0, 0, 0, 0)
+            window.setBackgroundDrawableResource(R.color.transparent)
+            dialog?.setCanceledOnTouchOutside(setOutsideTouchable())
+            dialog?.window?.setWindowAnimations(windowAnimation())
+        }
+    }
+
+    open fun gravity(): Int = Gravity.CENTER
+
+    open fun windowAnimation(): Int = R.style.Window_DialogAnimation
 
     override fun onResume() {
         super.onResume()
@@ -191,7 +209,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         return super.show(transaction, tag)
     }
 
-
+    open fun setOutsideTouchable(): Boolean = true
     override fun initLoadingView() {}
     override fun setListener() {}
     override fun observe() {}
