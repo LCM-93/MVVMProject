@@ -1,8 +1,10 @@
 package cm.mvvm.core.repository.http.log;
 
 import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import cm.mvvm.core.utils.CharacterHandler;
 import cm.mvvm.core.utils.LogUtils;
 import okhttp3.MediaType;
@@ -160,13 +162,13 @@ public class DefaultFormatPrinter implements FormatPrinter {
         }
     };
 
-    private static final String[] ARMS = new String[]{"-A-", "-R-", "-M-", "-S-"};
+    private static final String[] LCM = new String[]{"-L-", "-C-", "-M-", "-@-"};
 
     private static String computeKey() {
         if (last.get() >= 4) {
             last.set(0);
         }
-        String s = ARMS[last.get()];
+        String s = LCM[last.get()];
         last.set(last.get() + 1);
         return s;
     }

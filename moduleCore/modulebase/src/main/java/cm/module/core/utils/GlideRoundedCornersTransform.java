@@ -12,7 +12,7 @@ import java.security.MessageDigest;
  * ****************************************************************
  * Author: LiChenMing.Chaman
  * Date: 2019/10/10 10:11
- * Desc:
+ * Desc: glide设置圆角与 CenterGrop 冲突解决方案
  * *****************************************************************
  */
 public class GlideRoundedCornersTransform extends CenterCrop {

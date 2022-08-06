@@ -30,7 +30,8 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : DialogFragment(), BaseVMFragment {
+abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : DialogFragment(),
+    BaseVMFragment {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
@@ -43,7 +44,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
+        setStyle(STYLE_NO_TITLE, R.style.BASE_ThemeDialog)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
         viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
@@ -65,6 +66,8 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setStatusBar()
+        setStatusBarMode()
         initDialogView()
         initView()
         initLoadingView()
@@ -81,14 +84,16 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             params.gravity = gravity()
             window.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                if (fullScreen()) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
             )
             window.decorView.setPadding(0, 0, 0, 0)
             window.setBackgroundDrawableResource(R.color.transparent)
             dialog?.setCanceledOnTouchOutside(setOutsideTouchable())
-            dialog?.window?.setWindowAnimations(windowAnimation())
+            window.setWindowAnimations(windowAnimation())
         }
     }
+
+    open fun fullScreen(): Boolean = false
 
     open fun gravity(): Int = Gravity.CENTER
 
@@ -149,18 +154,18 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
             ViewModelProvider(activity!!).let {
-                if(viewModelTag() == null) {
+                if (viewModelTag() == null) {
                     it.get(getVMClass())
-                }else{
-                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                } else {
+                    it.get("BaseFragment : $tag : ${viewModelTag()}", getVMClass())
                 }
             }
         } else {
             ViewModelProvider(activity!!, viewModelFactory!!).let {
-                if(viewModelTag() == null){
+                if (viewModelTag() == null) {
                     it.get(getVMClass())
-                }else{
-                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                } else {
+                    it.get("BaseFragment : $tag : ${viewModelTag()}", getVMClass())
                 }
             }
         }
@@ -183,7 +188,10 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     fun fixedShow(activity: FragmentActivity?, tag: String) {
         if (activity == null || activity.isFinishing) {
-            Log.d("BaseDialogFragment", String.format("activity [%s] is null or is finishing!", activity))
+            Log.d(
+                "BaseDialogFragment",
+                String.format("activity [%s] is null or is finishing!", activity)
+            )
             return
         }
         instance = Any()
@@ -218,7 +226,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun handleVMEvent(any: Any?) {}
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
     override fun needEventBus(): Boolean = false
-    override fun viewModelTag(): String? = null
+    override fun viewModelTag(): String? = this.javaClass.simpleName
     override fun registerEventBus() {}
     override fun unRegisterEventBus() {}
 
@@ -237,7 +245,9 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     private fun setStatusBar() {
         if (useImmersiveStatusBar()) {
             if (fakeView() == null) {
-                BarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+                dialog?.window?.let {
+                    BarUtils.setStatusBarColor(it, Color.TRANSPARENT)
+                }
             } else {
                 if (BarUtils.getStatusBarHeight() > SizeUtils.dp2px(20f)) {
                     val layoutParams = fakeView()!!.layoutParams
