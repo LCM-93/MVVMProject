@@ -21,6 +21,10 @@ abstract class BaseViewModel : ViewModel() {
     var openPage: MutableLiveData<VMEvent<Pair<String, Any?>>> = MutableLiveData()
     var openDialog: MutableLiveData<VMEvent<Pair<String, Any?>>> = MutableLiveData()
 
+    fun onBackClick(){
+        finishActivity()
+    }
+
     fun finishActivity(result: Any? = null) {
         finishActivityEvent.value = VMEvent(result)
     }

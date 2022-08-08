@@ -13,7 +13,7 @@ import okhttp3.Response
  * *****************************************************************
  */
 class RequestGlobalHeader : GlobalHttpHandler {
-    override fun onHttpResultResponse(httpResult: String, chain: Interceptor.Chain, response: Response): Response =
+    override fun onHttpResultResponse(httpResult: String?, chain: Interceptor.Chain, response: Response): Response =
         response
 
     override fun onHttpRequestBefore(chain: Interceptor.Chain, request: Request): Request {

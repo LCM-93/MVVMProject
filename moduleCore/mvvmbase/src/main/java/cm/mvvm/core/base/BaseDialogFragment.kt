@@ -38,9 +38,9 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     private var instance: Any? = null
 
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-//    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-//        AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
-//    }
+    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
+        AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
