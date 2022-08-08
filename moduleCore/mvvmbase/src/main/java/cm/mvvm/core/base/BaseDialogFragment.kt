@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMFragment
 import cm.mvvm.core.base.event.LoadingStatus
+import cm.mvvm.core.dialog.BaseNoLeakDialog
 import cm.mvvm.core.utils.StatusBarUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -64,8 +65,8 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         return viewDataBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setStatusBar()
         setStatusBarMode()
         initDialogView()
@@ -108,11 +109,9 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return object : Dialog(requireActivity(), theme) {
-            override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-                return super.dispatchTouchEvent(ev)
-            }
-        }
+        val dialog = BaseNoLeakDialog(requireActivity(),theme)
+        dialog.setHostFragmentReference(this)
+        return dialog
     }
 
 

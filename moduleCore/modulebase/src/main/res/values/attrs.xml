@@ -10,4 +10,15 @@
         <attr name="rightBtnColor" format="color"/>
         <attr name="backColor" format="reference|color" />
     </declare-styleable>
+
+    <declare-styleable name="AutoPageGridView">
+        <!-- 行数 -->
+        <attr name="auto_lines" format="integer" />
+        <!-- 列数 -->
+        <attr name="auto_column" format="integer" />
+        <!-- button的样式 -->
+        <attr name="auto_button" format="reference" />
+        <!-- 是否显示导航点 -->
+        <attr name="auto_button_visible" format="boolean" />
+    </declare-styleable>
 </resources>
