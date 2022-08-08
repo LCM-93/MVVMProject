@@ -39,7 +39,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
     val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
+        AndroidLifecycleScopeProvider.from(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         setStyle(STYLE_NO_TITLE, R.style.BASE_ThemeDialog)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
+        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
     }
 
 
@@ -60,7 +60,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             return null
         }
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        viewDataBinding.lifecycleOwner = viewLifecycleOwner
+        viewDataBinding.lifecycleOwner = this
         return viewDataBinding.root
     }
 
@@ -108,7 +108,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return object : Dialog(activity!!, theme) {
+        return object : Dialog(requireActivity(), theme) {
             override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
                 return super.dispatchTouchEvent(ev)
             }
@@ -117,23 +117,23 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
 
     override fun baseObserve() {
-        viewModel.vmEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.vmEvent.observe(this, Observer {
             handleVMEvent(it?.getContentIfNotHandled())
         })
-        viewModel.loadStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.loadStatus.observe(this, Observer {
             handleLoadingStatus(it?.getContentIfNotHandled())
         })
-        viewModel.toastMsg.observe(viewLifecycleOwner, Observer {
+        viewModel.toastMsg.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { msg ->
                 showToast(msg)
             }
         })
-        viewModel.openPage.observe(viewLifecycleOwner, Observer {
+        viewModel.openPage.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { pair ->
                 openPage(pair.first, pair.second)
             }
         })
-        viewModel.openDialog.observe(viewLifecycleOwner, Observer {
+        viewModel.openDialog.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { pair ->
                 openDialog(pair.first, pair.second)
             }
@@ -153,7 +153,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProvider(activity!!).let {
+            ViewModelProvider(this).let {
                 if (viewModelTag() == null) {
                     it.get(getVMClass())
                 } else {
@@ -161,7 +161,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
                 }
             }
         } else {
-            ViewModelProvider(activity!!, viewModelFactory!!).let {
+            ViewModelProvider(this, viewModelFactory!!).let {
                 if (viewModelTag() == null) {
                     it.get(getVMClass())
                 } else {
@@ -248,11 +248,11 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     }
 
     private fun clearBaseObserve() {
-        viewModel.vmEvent.removeObservers(viewLifecycleOwner)
-        viewModel.loadStatus.removeObservers(viewLifecycleOwner)
-        viewModel.toastMsg.removeObservers(viewLifecycleOwner)
-        viewModel.openPage.removeObservers(viewLifecycleOwner)
-        viewModel.openDialog.removeObservers(viewLifecycleOwner)
+        viewModel.vmEvent.removeObservers(this)
+        viewModel.loadStatus.removeObservers(this)
+        viewModel.toastMsg.removeObservers(this)
+        viewModel.openPage.removeObservers(this)
+        viewModel.openDialog.removeObservers(this)
     }
 
     override fun onDestroy() {
@@ -282,7 +282,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     private fun setStatusBarMode() {
         if (useImmersiveStatusBar()) {
-            StatusBarUtils.setStatusBarLightMode(activity!!, statusBarIsDarkMode())
+            StatusBarUtils.setStatusBarLightMode(requireActivity(), statusBarIsDarkMode())
         }
     }
 

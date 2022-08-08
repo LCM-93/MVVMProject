@@ -101,7 +101,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProvider(activity!!).let {
+            ViewModelProvider(this).let {
                 if (viewModelTag() == null) {
                     it.get(getVMClass())
                 } else {
@@ -109,7 +109,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
                 }
             }
         } else {
-            ViewModelProvider(activity!!, viewModelFactory!!).let {
+            ViewModelProvider(this, viewModelFactory!!).let {
                 if (viewModelTag() == null) {
                     it.get(getVMClass())
                 } else {
@@ -176,7 +176,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     private fun setStatusBar() {
         if (useImmersiveStatusBar()) {
             if (fakeView() == null) {
-                BarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+                BarUtils.setStatusBarColor(requireActivity(), Color.TRANSPARENT)
             } else {
                 if (BarUtils.getStatusBarHeight() > SizeUtils.dp2px(20f)) {
                     val layoutParams = fakeView()!!.layoutParams
@@ -190,7 +190,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
 
     private fun setStatusBarMode() {
         if (useImmersiveStatusBar()) {
-            StatusBarUtils.setStatusBarLightMode(activity!!, statusBarIsDarkMode())
+            StatusBarUtils.setStatusBarLightMode(requireActivity(), statusBarIsDarkMode())
         }
     }
 
