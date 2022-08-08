@@ -30,9 +30,9 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(
-        this
-    ) }
+//    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(
+//        this
+//    ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

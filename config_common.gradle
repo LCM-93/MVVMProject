@@ -175,6 +175,11 @@ ext {
             "room-ktx"                   : "androidx.room:room-ktx:${versionX["androidXRoomSdkVersion"]}",
             "room-rxjava2"               : "androidx.room:room-rxjava2:${versionX["androidXRoomSdkVersion"]}",
 
+            "picture"                    : "io.github.lucksiege:pictureselector:v3.10.5",
+            "picture-compree"            : "io.github.lucksiege:compress:v3.10.4", //图片压缩
+            "picture-crop"               : "io.github.lucksiege:ucrop:v3.10.4", //图片裁剪
+            "picture-camerax"            : "io.github.lucksiege:camerax:v3.10.4", //自定义相机
+
             //tools
             "multidex"                   : "androidx.multidex:multidex:2.0.1",
             "utils"                      : "com.blankj:utilcodex:1.29.0",

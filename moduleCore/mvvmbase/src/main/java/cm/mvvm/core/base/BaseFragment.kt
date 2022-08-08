@@ -26,14 +26,15 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFragment(), BaseVMFragment {
+abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFragment(),
+    BaseVMFragment {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(this)
-    }
+//    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
+//        AndroidLifecycleScopeProvider.from(this)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +44,9 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         viewDataBinding.lifecycleOwner = this
@@ -101,18 +102,18 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
             ViewModelProvider(activity!!).let {
-                if(viewModelTag() == null) {
+                if (viewModelTag() == null) {
                     it.get(getVMClass())
-                }else{
-                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                } else {
+                    it.get("BaseFragment : $tag : ${viewModelTag()}", getVMClass())
                 }
             }
         } else {
             ViewModelProvider(activity!!, viewModelFactory!!).let {
-                if(viewModelTag() == null){
+                if (viewModelTag() == null) {
                     it.get(getVMClass())
-                }else{
-                    it.get("BaseFragment : $tag : ${viewModelTag()}",getVMClass())
+                } else {
+                    it.get("BaseFragment : $tag : ${viewModelTag()}", getVMClass())
                 }
             }
         }
@@ -138,9 +139,30 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {}
     override fun needEventBus(): Boolean = false
     override fun viewModelTag(): String? = null
+    override fun needClearStatus(): Boolean = true
+    override fun clearStatus() {}
 
     override fun showToast(msg: String, duration: Int) {
         Toast.makeText(activity?.applicationContext, msg, duration).show()
+    }
+
+    override fun onDestroyView() {
+        if (needClearStatus()) {
+            clearBaseObserve()
+            clearStatus()
+            arguments?.clear()
+            viewModel.clearUiStatus()
+
+        }
+        super.onDestroyView()
+    }
+
+    private fun clearBaseObserve() {
+        viewModel.vmEvent.removeObservers(this)
+        viewModel.loadStatus.removeObservers(this)
+        viewModel.toastMsg.removeObservers(this)
+        viewModel.openPage.removeObservers(this)
+        viewModel.openDialog.removeObservers(this)
     }
 
     override fun onDestroy() {

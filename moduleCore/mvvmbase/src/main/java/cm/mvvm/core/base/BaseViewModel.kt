@@ -64,4 +64,8 @@ abstract class BaseViewModel : ViewModel() {
         return false
     }
 
+    fun clearUiStatus(){
+
+    }
+
 }

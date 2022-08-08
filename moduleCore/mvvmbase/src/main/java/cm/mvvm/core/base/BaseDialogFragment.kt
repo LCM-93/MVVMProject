@@ -38,16 +38,16 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     private var instance: Any? = null
 
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(this)
-    }
+//    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
+//        AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.BASE_ThemeDialog)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
+        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(viewLifecycleOwner)
     }
 
 
@@ -60,7 +60,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             return null
         }
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        viewDataBinding.lifecycleOwner = this
+        viewDataBinding.lifecycleOwner = viewLifecycleOwner
         return viewDataBinding.root
     }
 
@@ -229,9 +229,30 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun viewModelTag(): String? = this.javaClass.simpleName
     override fun registerEventBus() {}
     override fun unRegisterEventBus() {}
+    override fun needClearStatus(): Boolean = true
+    override fun clearStatus() {}
 
     override fun showToast(msg: String, duration: Int) {
         Toast.makeText(activity?.applicationContext, msg, duration).show()
+    }
+
+    override fun onDestroyView() {
+        if (needClearStatus()) {
+            clearBaseObserve()
+            clearStatus()
+            arguments?.clear()
+            viewModel.clearUiStatus()
+
+        }
+        super.onDestroyView()
+    }
+
+    private fun clearBaseObserve() {
+        viewModel.vmEvent.removeObservers(viewLifecycleOwner)
+        viewModel.loadStatus.removeObservers(viewLifecycleOwner)
+        viewModel.toastMsg.removeObservers(viewLifecycleOwner)
+        viewModel.openPage.removeObservers(viewLifecycleOwner)
+        viewModel.openDialog.removeObservers(viewLifecycleOwner)
     }
 
     override fun onDestroy() {

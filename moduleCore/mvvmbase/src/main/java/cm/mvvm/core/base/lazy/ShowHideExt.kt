@@ -139,3 +139,31 @@ private fun showHideFragmentTransaction(fragmentManager: FragmentManager, showFr
         }
     }.commit()
 }
+
+
+fun FragmentActivity.removeAddFragment( @IdRes containerViewId: Int,
+                                        removeTag: String,
+                                        addFragment: Fragment?){
+    removeAddFragmentTransaction(containerViewId,supportFragmentManager,removeTag,addFragment)
+}
+
+/**
+ * 根据Tag移除现有Fragment 替换添加新的Fragment
+ */
+private fun removeAddFragmentTransaction(
+    @IdRes containerViewId: Int,
+    fragmentManager: FragmentManager,
+    removeTag: String,
+    addFragment: Fragment?
+) {
+    val removeFragment = fragmentManager.findFragmentByTag(removeTag)
+    fragmentManager.beginTransaction().apply{
+        if(removeFragment != null){
+            remove(removeFragment)
+        }
+        if(addFragment != null){
+            add(containerViewId, addFragment, addFragment.javaClass.name)
+            setMaxLifecycle(addFragment, Lifecycle.State.RESUMED)
+        }
+    }.commit()
+}
