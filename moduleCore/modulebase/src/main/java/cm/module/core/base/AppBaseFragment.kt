@@ -1,5 +1,7 @@
 package cm.module.core.base
 
+import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import androidx.databinding.ViewDataBinding
 import cm.mvvm.core.base.BaseFragment
@@ -14,15 +16,22 @@ import cm.mvvm.core.utils.RxBus
  * Desc:
  * *****************************************************************
  */
-abstract class AppBaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : BaseFragment<DB,VM>() {
+abstract class AppBaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : BaseFragment<DB, VM>() {
+
+    companion object {
+        fun standOpen(activity: Activity, arguments: Bundle) {
+            FragmentContainerActivity.open(activity, this::class.java.name, arguments)
+        }
+    }
+
 
     override fun initLoadingView() {
-        Log.e("TAG","初始化一个统一的LoadingView")
+        Log.e("TAG", "初始化一个统一的LoadingView")
     }
 
 
     override fun handleLoadingStatus(loadingStatus: LoadingStatus?) {
-        Log.e("TAG","统一处理 Loading状态")
+        Log.e("TAG", "统一处理 Loading状态")
     }
 
     override fun registerEventBus() {
