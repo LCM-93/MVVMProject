@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMActivity
@@ -25,22 +26,26 @@ import java.lang.reflect.ParameterizedType
  * Desc:
  * *****************************************************************
  */
-abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), BaseVMActivity {
+abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(),
+    BaseVMActivity {
 
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
-    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(
-        this
-    ) }
+    val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
+        AndroidLifecycleScopeProvider.from(
+            this, Lifecycle.Event.ON_DESTROY
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerEventBus()
+        if (needEventBus()) registerEventBus()
         viewDataBinding = DataBindingUtil.setContentView(this, layoutId())
         viewModel = viewModel()
         viewDataBinding.lifecycleOwner = this
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
+        viewModel.lifecycleScopeProvider =
+            AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
         setStatusBar()
         setStatusBarMode()
         initView()
@@ -50,6 +55,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         observe()
         initData(savedInstanceState)
     }
+
 
     override fun baseObserve() {
         viewModel.vmEvent.observe(this, Observer {
@@ -108,7 +114,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
 
-
     override fun initLoadingView() {}
     override fun setListener() {}
     override fun observe() {}
@@ -126,7 +131,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
     override fun onDestroy() {
-        if(needEventBus())unRegisterEventBus()
+        if (needEventBus()) unRegisterEventBus()
         super.onDestroy()
     }
 
@@ -157,6 +162,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             StatusBarUtils.setStatusBarLightMode(this, statusBarIsDarkMode())
         }
     }
+
     override fun useImmersiveStatusBar(): Boolean = true
     override fun statusBarColor(): Int = Color.WHITE
     override fun fakeView(): View? = null

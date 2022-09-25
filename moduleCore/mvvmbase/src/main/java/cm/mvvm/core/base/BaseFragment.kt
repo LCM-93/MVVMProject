@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMFragment
@@ -33,14 +34,14 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     lateinit var viewModel: VM
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
     val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(this)
+        AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
+        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
     }
 
     override fun onCreateView(
@@ -50,13 +51,14 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         viewDataBinding.lifecycleOwner = this
+        initView()
         return viewDataBinding.root
     }
 
     override fun lazyInit() {
         setStatusBar()
         setStatusBarMode()
-        initView()
+
         initLoadingView()
         setListener()
         baseObserve()
@@ -101,7 +103,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
      */
     private fun viewModel(): VM {
         viewModel = if (viewModelFactory == null) {
-            ViewModelProvider(this).let {
+            ViewModelProvider(requireActivity()).let {
                 if (viewModelTag() == null) {
                     it.get(getVMClass())
                 } else {
@@ -109,7 +111,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
                 }
             }
         } else {
-            ViewModelProvider(this, viewModelFactory!!).let {
+            ViewModelProvider(requireActivity(), viewModelFactory!!).let {
                 if (viewModelTag() == null) {
                     it.get(getVMClass())
                 } else {
@@ -176,7 +178,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
     private fun setStatusBar() {
         if (useImmersiveStatusBar()) {
             if (fakeView() == null) {
-                BarUtils.setStatusBarColor(requireActivity(), Color.TRANSPARENT)
+                BarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
             } else {
                 if (BarUtils.getStatusBarHeight() > SizeUtils.dp2px(20f)) {
                     val layoutParams = fakeView()!!.layoutParams
@@ -190,7 +192,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : LazyFrag
 
     private fun setStatusBarMode() {
         if (useImmersiveStatusBar()) {
-            StatusBarUtils.setStatusBarLightMode(requireActivity(), statusBarIsDarkMode())
+            StatusBarUtils.setStatusBarLightMode(activity!!, statusBarIsDarkMode())
         }
     }
 

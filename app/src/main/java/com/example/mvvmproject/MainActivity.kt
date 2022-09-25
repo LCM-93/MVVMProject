@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.alibaba.android.arouter.launcher.ARouter
-import cm.module.core.config.ARouterPath
+import cm.module.core.plugins.arouter.ARouterPath
 
 class MainActivity : AppCompatActivity() {
 

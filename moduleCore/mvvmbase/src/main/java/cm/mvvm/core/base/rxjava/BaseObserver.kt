@@ -8,7 +8,7 @@ import java.io.IOException
 
 /**
  * *****************************************************************
- * @author: LiChenMing
+ * @author: Lichenming
  * @date: 2022/9/19 15:07
  * @description: BaseObserver.kt
  * *****************************************************************

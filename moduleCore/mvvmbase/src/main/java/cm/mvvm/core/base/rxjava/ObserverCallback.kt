@@ -13,7 +13,7 @@ interface IObserverCallback<T> {
     fun error(throwable: Throwable, message: String)
 }
 
-abstract class BaseObserverCallback<T> : IObserverCallback<T> {
+abstract class SimpleObserverCallback<T> : IObserverCallback<T> {
     override fun error(throwable: Throwable, message: String) {
 
     }

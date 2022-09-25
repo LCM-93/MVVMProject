@@ -5,7 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.usermodule.R
 import com.example.usermodule.databinding.ActivityLoginBinding
 import cm.module.core.base.AppBaseActivity
-import cm.module.core.config.ARouterPath
+import cm.module.core.plugins.arouter.ARouterPath
 import cm.module.core.plugins.view.PopupManager
 import com.example.usermodule.config.EventConfig
 

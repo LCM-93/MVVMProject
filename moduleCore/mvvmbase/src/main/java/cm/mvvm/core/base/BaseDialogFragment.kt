@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cm.mvvm.core.base.base.BaseVMFragment
@@ -34,13 +35,17 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : DialogFragment(),
     BaseVMFragment {
 
+    enum class ScreenType {
+        MATCH_WIDTH, MATCH_HEIGHT, FULL_SCREEN, WRAP_CONTENT
+    }
+
     lateinit var viewDataBinding: DB
     lateinit var viewModel: VM
     private var instance: Any? = null
 
     private var viewModelFactory: ViewModelProvider.NewInstanceFactory? = null
     val lifecycleScopeProvider: AndroidLifecycleScopeProvider by lazy {
-        AndroidLifecycleScopeProvider.from(this)
+        AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +53,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         setStyle(STYLE_NO_TITLE, R.style.BASE_ThemeDialog)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
-        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this)
+        viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
     }
 
 
@@ -61,7 +66,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             return null
         }
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        viewDataBinding.lifecycleOwner = this
+        viewDataBinding.lifecycleOwner = viewLifecycleOwner
         return viewDataBinding.root
     }
 
@@ -83,10 +88,24 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
             val window = dialog!!.window
             val params = window!!.attributes
             params.gravity = gravity()
-            window.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                if (fullScreen()) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            when (screenType()) {
+                ScreenType.MATCH_WIDTH -> window.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                ScreenType.MATCH_HEIGHT -> window.setLayout(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                ScreenType.FULL_SCREEN -> window.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                ScreenType.WRAP_CONTENT -> window.setLayout(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
             window.decorView.setPadding(0, 0, 0, 0)
             window.setBackgroundDrawableResource(R.color.transparent)
             dialog?.setCanceledOnTouchOutside(setOutsideTouchable())
@@ -94,11 +113,6 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
         }
     }
 
-    open fun fullScreen(): Boolean = false
-
-    open fun gravity(): Int = Gravity.CENTER
-
-    open fun windowAnimation(): Int = R.style.Window_DialogAnimation
 
     override fun onResume() {
         super.onResume()
@@ -109,7 +123,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = BaseNoLeakDialog(requireActivity(),theme)
+        val dialog = BaseNoLeakDialog(requireActivity(), theme)
         dialog.setHostFragmentReference(this)
         return dialog
     }
@@ -215,6 +229,10 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
     override fun show(transaction: FragmentTransaction, tag: String?): Int {
         return super.show(transaction, tag)
     }
+
+    open fun screenType(): ScreenType = ScreenType.MATCH_WIDTH
+    open fun gravity(): Int = Gravity.CENTER
+    open fun windowAnimation(): Int = R.style.Window_DialogAnimation
 
     open fun setOutsideTouchable(): Boolean = true
     override fun initLoadingView() {}

@@ -1,4 +1,4 @@
-package cm.module.core.config
+package cm.module.core.plugins.arouter
 
 /**
  * ****************************************************************

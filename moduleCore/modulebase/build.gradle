@@ -66,8 +66,12 @@ dependencies {
 //    kapt rootProject.ext.dependencies['glide-compiler']
     debugApi rootProject.ext.dependencies['canary-debug']
     releaseApi rootProject.ext.dependencies['canary-release']
+    api rootProject.ext.dependenciesX['refresh-layout']
+    api rootProject.ext.dependenciesX['refresh-header-classics']
+    api rootProject.ext.dependenciesX['refresh-footer-classics']
 
     api rootProject.ext.modules['easyPopup']
     api rootProject.ext.modules['x5webview']
+    api rootProject.ext.dependencies['wheelPicker']
 
 }
