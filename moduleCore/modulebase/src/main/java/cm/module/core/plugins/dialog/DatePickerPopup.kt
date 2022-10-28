@@ -47,7 +47,7 @@ object DatePickerPopup {
             .setBackgroundDimEnable(true)
             .setDimValue(0.4f)
             .setFocusAndOutsideEnable(true)
-            .setAnimationStyle(R.style.popup_bottom_in_out_style)
+            .setAnimationStyle(R.style.bottom_in_out_style)
             .apply()
 
         tvCancel = datePickerPopup?.findViewById(R.id.tv_cancel)

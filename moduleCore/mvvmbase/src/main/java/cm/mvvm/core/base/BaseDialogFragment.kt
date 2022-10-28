@@ -50,7 +50,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.BASE_ThemeDialog)
+        setStyle(STYLE_NO_TITLE, R.style.FullScreenDialogTheme)
         if (needEventBus()) registerEventBus()
         viewModel = viewModel()
         viewModel.lifecycleScopeProvider = AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
@@ -232,7 +232,7 @@ abstract class BaseDialogFragment<DB : ViewDataBinding, VM : BaseViewModel> : Di
 
     open fun screenType(): ScreenType = ScreenType.MATCH_WIDTH
     open fun gravity(): Int = Gravity.CENTER
-    open fun windowAnimation(): Int = R.style.Window_DialogAnimation
+    open fun windowAnimation(): Int = R.style.fade_in_out_style
 
     open fun setOutsideTouchable(): Boolean = true
     override fun initLoadingView() {}

@@ -37,7 +37,7 @@ object PopupManager {
             .setWidth(AutoSizeUtils.dp2px(activity.applicationContext, 270f))
             .setDimValue(0.8f)
             .setBackgroundDimEnable(true)
-            .setAnimationStyle(R.style.popup_scale_in_out_style)
+            .setAnimationStyle(R.style.scale_in_out_style)
             .apply()
         dialogPopup?.findViewById<TextView>(R.id.tv_msg)?.text = msg
         dialogPopup?.findViewById<TextView>(R.id.tv_cancel)?.also { it.text = cancel_text }

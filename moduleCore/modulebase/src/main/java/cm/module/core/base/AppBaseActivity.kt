@@ -46,7 +46,7 @@ abstract class AppBaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : BaseA
     override fun finish() {
         super.finish()
         if(needPendingAnim()) {
-            overridePendingTransition(0, R.anim.page_right_out);//出场动画
+            overridePendingTransition(0, R.anim.anim_right_out);//出场动画
         }
     }
 

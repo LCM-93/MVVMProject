@@ -16,7 +16,7 @@ class LoadingDialog : Dialog {
 
     constructor(context: Context, themeResId: Int) : super(context, themeResId)
 
-    constructor(context: Context) : this(context, R.style.MyDialog)
+    constructor(context: Context) : this(context, R.style.Loading_Dialog)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

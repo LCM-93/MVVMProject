@@ -1,22 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Window.DialogAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/mc__fade_in</item>
-        <item name="android:windowExitAnimation">@anim/mc__fade_out</item>
+
+<!--    <style name="Window.DialogAnimation" parent="@android:style/Animation.Activity">-->
+<!--        <item name="android:windowEnterAnimation">@anim/mc__fade_in</item>-->
+<!--        <item name="android:windowExitAnimation">@anim/mc__fade_out</item>-->
+<!--    </style>-->
+    <!--   底部进出 -->
+    <style name="bottom_in_out_style">
+        <item name="android:windowEnterAnimation">@anim/anim_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottom_out</item>
     </style>
 
-    <style name="BASE_ThemeDialog" parent="android:Theme">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@style/Window.DialogAnimation</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowSoftInputMode">stateHidden|adjustPan</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowTitleStyle">@null</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:gravity">center</item>
-        <item name="android:backgroundDimEnabled">true</item>
+    <!-- 顶部进出-->
+    <style name="top_in_out_style">
+        <item name="android:windowEnterAnimation">@anim/anim_top_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_top_out</item>
     </style>
+
+    <!-- 右侧进出-->
+    <style name="right_in_out_style">
+        <item name="android:windowEnterAnimation">@anim/anim_right_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_right_out</item>
+    </style>
+
+    <!-- 左侧进出-->
+    <style name="left_in_out_style">
+        <item name="android:windowEnterAnimation">@anim/anim_left_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_left_out</item>
+    </style>
+
+    <!-- 放大进入缩小出-->
+    <style name="scale_in_out_style">
+        <item name="android:windowEnterAnimation">@anim/anim_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_scale_out</item>
+    </style>
+    <!--透明度改变进入退出-->
+    <style name="fade_in_out_style">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+    </style>
+
+
+    <!-- 沉浸式 透明状态栏 -->
+    <style name="FullScreenDialogTheme" parent="Theme.AppCompat.Dialog">
+        <!-- 上面说过，只要是Dialog，这两个属性必须设置 -->
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!--设置透明状态栏，适用于SDK19（4.4）及以上版本-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 如果你不需要自定义状态栏颜色，下面两个可不要 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 透明导航栏 -->
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <!-- 沉浸式 无状态栏 -->
+    <!--    <style name="FullScreenDialogTheme" parent="Theme.AppCompat.Dialog">-->
+    <!--        &lt;!&ndash; 上面说过，只要是Dialog，这两个属性必须设置 &ndash;&gt;-->
+    <!--        <item name="android:windowIsFloating">false</item>-->
+    <!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+
+    <!--        &lt;!&ndash;隐藏状态栏内容和高度，适用于SDK19（4.4）及以上版本&ndash;&gt;-->
+    <!--        <item name="android:windowFullscreen">true</item>-->
+    <!--        &lt;!&ndash; 对于28及以上的版本，需要指定该属性，否则对于异形屏的手机，无法让布局铺满异性区域 &ndash;&gt;-->
+    <!--        <item name="android:windowLayoutInDisplayCutoutMode" >shortEdges</item>-->
+    <!--        <item name="android:windowTranslucentStatus" >true</item>-->
+
+    <!--        &lt;!&ndash; 透明导航栏 &ndash;&gt;-->
+    <!--        <item name="android:windowTranslucentNavigation">true</item>-->
+    <!--    </style>-->
 
 </resources>

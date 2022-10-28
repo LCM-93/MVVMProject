@@ -20,6 +20,6 @@ abstract class BaseBottomDialogFragment<DB : ViewDataBinding, VM : BaseViewModel
         return Gravity.BOTTOM
     }
 
-    override fun windowAnimation(): Int  = R.style.dialog_bottom_in_out_style
+    override fun windowAnimation(): Int  = R.style.bottom_in_out_style
 
 }

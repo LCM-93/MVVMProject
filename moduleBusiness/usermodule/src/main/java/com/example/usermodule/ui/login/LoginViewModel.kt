@@ -5,7 +5,7 @@ import cm.module.core.data.entity.LoginData
 import cm.module.core.data.remote.UserApi
 import cm.mvvm.core.base.BaseViewModel
 import cm.mvvm.core.base.rxjava.BaseObserver
-import cm.mvvm.core.base.rxjava.BaseObserverCallback
+import cm.mvvm.core.base.rxjava.SimpleObserverCallback
 import com.example.usermodule.config.EventConfig
 import com.uber.autodispose.autoDispose
 import io.reactivex.Observable
@@ -37,7 +37,7 @@ class LoginViewModel : BaseViewModel() {
             .flatMap { UserApi.instance.login(userName.value, password.value) }
             .doFinally { hideLoading(true) }
             .autoDispose(lifecycleScopeProvider)
-            .subscribe(BaseObserver(this, object : BaseObserverCallback<LoginData>() {
+            .subscribe(BaseObserver(this, object : SimpleObserverCallback<LoginData>() {
                 override fun result(data: LoginData) {
 
                 }

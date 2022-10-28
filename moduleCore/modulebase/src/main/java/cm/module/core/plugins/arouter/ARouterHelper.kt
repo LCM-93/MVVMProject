@@ -63,7 +63,7 @@ object ARouterBuilder {
 
     fun navigation(activity: Activity? = null, needAnim: Boolean = true): Any? {
         if (needAnim) {
-            postcard.withTransition(R.anim.page_right_in, 0)
+            postcard.withTransition(R.anim.anim_right_in, 0)
         }
         if (activity != null) {
             return postcard.navigation(activity)
